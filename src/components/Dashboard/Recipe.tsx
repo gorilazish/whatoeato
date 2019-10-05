@@ -4,6 +4,7 @@ import { deleteEntry, Ingredient } from '../../db'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
@@ -67,6 +68,7 @@ export default function Recipe({
   author,
   ingredients,
   description,
+  image,
 }: RecipeProps) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
@@ -81,6 +83,7 @@ export default function Recipe({
 
   return (
     <Card className={classes.card}>
+      {image && <CardMedia className={classes.media} image={image} />}
       <CardContent>
         <Typography
           className={classes.title}
