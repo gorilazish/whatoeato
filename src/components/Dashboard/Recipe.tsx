@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import styled from '@emotion/styled'
 
 import { deleteEntry, Ingredient } from '../../db'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
@@ -51,6 +51,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const MyCard = styled.div`
+  border: 1px solid black;
+  max-width: 345px;
+`
+
 type RecipeProps = {
   id: string
   title: string
@@ -85,7 +90,7 @@ export default function Recipe({
   }
 
   return (
-    <Card className={classes.card} style={style}>
+    <MyCard>
       {image && <CardMedia className={classes.media} image={image} />}
       <CardContent>
         <Typography variant="h5" component="h2">
@@ -133,6 +138,6 @@ export default function Recipe({
           <Typography>{description}</Typography>
         </CardContent>
       </Collapse>
-    </Card>
+    </MyCard>
   )
 }

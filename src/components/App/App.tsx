@@ -19,7 +19,6 @@ import {
 import Login from '../Login/Login'
 import Signup from '../Signup/Signup'
 import Dashboard from '../Dashboard/Dashboard'
-import CreateRecipe from '../Dashboard/CreateRecipe'
 import 'typeface-roboto'
 
 const theme = createMuiTheme()
@@ -86,7 +85,6 @@ function App(props: any) {
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/create" component={CreateRecipe} />
               </Switch>
             </Router>
           </MuiThemeProvider>
@@ -94,10 +92,10 @@ function App(props: any) {
       </Paper>
     </main>
   ) : (
-    <div id="loader">
-      <CircularProgress />
-    </div>
-  )
+      <div id="loader">
+        <CircularProgress />
+      </div>
+    )
 }
 
 // @ts-ignore
