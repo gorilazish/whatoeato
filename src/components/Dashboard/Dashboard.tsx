@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Button } from '@material-ui/core'
 // @ts-ignore
 import { withRouter, Link } from 'react-router-dom'
-import { useSession, signOut } from '../../auth'
+import { useSession } from '../../auth'
 import RecipeList from './RecipeList'
 import Modal from '../Modal/Modal'
 import CreateRecipe from './CreateRecipe'
@@ -24,22 +24,10 @@ function Dashboard(props: any) {
   // @ts-ignore
   const user = useSession()
 
-  async function handleLogoutClick() {
-    await signOut()
-    props.history.push('/')
-  }
+
 
   return !user ? (
     <>
-      <Button
-        type="submit"
-        variant="contained"
-        color="secondary"
-        component={Link}
-        to="/signup"
-      >
-        Register
-      </Button>
       <Button
         type="submit"
         variant="contained"
@@ -49,28 +37,25 @@ function Dashboard(props: any) {
       >
         Login
       </Button>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        component={Link}
+        to="/signup"
+      >
+        Register
+      </Button>
     </>
   ) : (
       <>
         <Button color="secondary" variant="contained" onClick={() => setShow(!show)}>New</Button>
         <Modal isOpen={show}>
-          <Container>
-            <div style={{ height: '80vh', width: '80vw', background: 'white' }}>
-              <button onClick={() => setShow(false)}>CLOSE</button>
-              <CreateRecipe />
-            </div>
-          </Container>
+          <button onClick={() => setShow(false)}>CLOSE</button>
+          <CreateRecipe />
         </Modal>
         <RecipeList />
 
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          onClick={handleLogoutClick}
-        >
-          Logout
-      </Button>
       </>
     )
 }
