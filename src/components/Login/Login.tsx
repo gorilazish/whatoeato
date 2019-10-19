@@ -12,7 +12,7 @@ function SignIn(props) {
   async function handleLoginClick() {
     try {
       await loginWithEmail(email, password)
-      props.history.replace('/dashboard')
+      props.history.replace('/')
     } catch (error) {
       alert(error.message)
     }

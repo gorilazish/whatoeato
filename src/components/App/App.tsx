@@ -16,7 +16,6 @@ import {
   CircularProgress,
   CssBaseline,
 } from '@material-ui/core'
-import HomePage from '../Home/Home'
 import Login from '../Login/Login'
 import Signup from '../Signup/Signup'
 import Dashboard from '../Dashboard/Dashboard'
@@ -84,10 +83,9 @@ function App(props: any) {
             <CssBaseline />
             <Router>
               <Switch>
-                <Route exact path="/" component={HomePage} />
+                <Route exact path="/" component={Dashboard} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/create" component={CreateRecipe} />
               </Switch>
             </Router>

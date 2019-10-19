@@ -19,7 +19,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 const useStyles = makeStyles(theme => ({
   card: {
-    minWidth: 275,
     maxWidth: 345,
   },
   bullet: {
@@ -60,6 +59,8 @@ type RecipeProps = {
   image?: string
   author: string
   ingredients?: Ingredient[]
+  relatedLinks?: any[]
+  style?: object
 }
 
 export default function Recipe({
@@ -69,6 +70,8 @@ export default function Recipe({
   ingredients,
   description,
   image,
+  relatedLinks = [],
+  style,
 }: RecipeProps) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
@@ -82,16 +85,9 @@ export default function Recipe({
   }
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} style={style}>
       {image && <CardMedia className={classes.media} image={image} />}
       <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          Receptielis
-        </Typography>
         <Typography variant="h5" component="h2">
           {title}
         </Typography>
@@ -111,7 +107,7 @@ export default function Recipe({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography>{author}</Typography>
+          <Typography>Author - {author}</Typography>
           <List dense>
             {ingredients &&
               ingredients.map(item => (
@@ -120,7 +116,20 @@ export default function Recipe({
                 </ListItem>
               ))}
           </List>
-
+          <List>
+            {relatedLinks.length > 0 &&
+              relatedLinks.slice(0, 3).map((item, index) => (
+                <a href={item.link} key={index}>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {item.title}
+                  </Typography>
+                </a>
+              ))}
+          </List>
           <Typography>{description}</Typography>
         </CardContent>
       </Collapse>

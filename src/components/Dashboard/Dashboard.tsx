@@ -9,21 +9,36 @@ function Dashboard(props: any) {
   // @ts-ignore
   const user = useSession()
 
-  if (!user) {
-    props.history.push('/')
-    return null
-  }
-
   async function handleLogoutClick() {
     await signOut()
     props.history.push('/')
   }
 
-  return (
+  return !user ? (
     <>
       <Button
         type="submit"
-        fullWidth
+        variant="contained"
+        color="secondary"
+        component={Link}
+        to="/signup"
+      >
+        Register
+      </Button>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        component={Link}
+        to="/login"
+      >
+        Login
+      </Button>
+    </>
+  ) : (
+    <>
+      <Button
+        type="submit"
         variant="contained"
         color="primary"
         to={'/create'}
@@ -36,7 +51,6 @@ function Dashboard(props: any) {
 
       <Button
         type="submit"
-        fullWidth
         variant="contained"
         color="secondary"
         onClick={handleLogoutClick}

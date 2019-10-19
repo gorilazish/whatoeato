@@ -13,7 +13,7 @@ function Signup(props) {
   async function handleSignupClick() {
     try {
       createUserWithEmail(name, email, password)
-      props.history.replace('/dashboard')
+      props.history.replace('/')
     } catch (error) {
       alert(error.message)
     }

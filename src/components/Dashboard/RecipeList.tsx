@@ -23,7 +23,13 @@ export default function RecipeList() {
   // @ts-ignore
   const userRecipes: any[] = values
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr',
+        gridGap: '10px',
+      }}
+    >
       {userRecipes &&
         userRecipes.length > 0 &&
         userRecipes.map((item, index) => (

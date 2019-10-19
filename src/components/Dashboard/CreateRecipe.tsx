@@ -122,30 +122,31 @@ function CreateRecipe({ history }: Props) {
             //   />
             // }
             label={
-              item.name ? (
-                <div>
-                  <p>{`${item.name} - ${item.amount}`}</p>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    display: 'flex',
-                  }}
-                >
-                  <InputBase
-                    value={currentIngredientName}
-                    onChange={e => setCurrentIngredientName(e.target.value)}
-                    placeholder="Name"
-                  />
-                  <InputBase
-                    value={currentIngredientAmount}
-                    onChange={e => setCurrentIngredientAmount(e.target.value)}
-                    placeholder="Amount"
-                  />
-                </div>
-              )
+              // item.name ? (
+              //   <div>
+              //     <p>{`${item.name} - ${item.amount}`}</p>
+              //   </div>
+              // ) :
+
+              <div
+                style={{
+                  display: 'flex',
+                }}
+              >
+                <InputBase
+                  value={item.name || currentIngredientName}
+                  onChange={e => setCurrentIngredientName(e.target.value)}
+                  placeholder="Name"
+                  disabled={!!item.name}
+                />
+                <InputBase
+                  value={item.amount || currentIngredientAmount}
+                  onChange={e => setCurrentIngredientAmount(e.target.value)}
+                  placeholder="Amount"
+                  disabled={!!item.amount}
+                />
+              </div>
             }
-            color={item.name ? 'primary' : undefined}
             onDelete={handleIngredientActionClick(item)}
             deleteIcon={item.name ? undefined : <DoneIcon />}
             style={{ height: '100%', marginBottom: '15px', padding: '5px' }}
