@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/whatoeato/static/css/main.10734000.chunk.css",
-    "main.js": "/whatoeato/static/js/main.87b31935.chunk.js",
-    "main.js.map": "/whatoeato/static/js/main.87b31935.chunk.js.map",
+    "main.css": "/whatoeato/static/css/main.f1bdf882.chunk.css",
+    "main.js": "/whatoeato/static/js/main.1e6a8e1e.chunk.js",
+    "main.js.map": "/whatoeato/static/js/main.1e6a8e1e.chunk.js.map",
     "runtime-main.js": "/whatoeato/static/js/runtime-main.10b97b2a.js",
     "runtime-main.js.map": "/whatoeato/static/js/runtime-main.10b97b2a.js.map",
     "static/css/2.e7bc86a4.chunk.css": "/whatoeato/static/css/2.e7bc86a4.chunk.css",
-    "static/js/2.fca02c23.chunk.js": "/whatoeato/static/js/2.fca02c23.chunk.js",
-    "static/js/2.fca02c23.chunk.js.map": "/whatoeato/static/js/2.fca02c23.chunk.js.map",
+    "static/js/2.a0f6a117.chunk.js": "/whatoeato/static/js/2.a0f6a117.chunk.js",
+    "static/js/2.a0f6a117.chunk.js.map": "/whatoeato/static/js/2.a0f6a117.chunk.js.map",
     "index.html": "/whatoeato/index.html",
-    "precache-manifest.57fb004a40a79fec99b75cbe17343e60.js": "/whatoeato/precache-manifest.57fb004a40a79fec99b75cbe17343e60.js",
+    "precache-manifest.1e5e68bd89d4622a38a20bd2062216af.js": "/whatoeato/precache-manifest.1e5e68bd89d4622a38a20bd2062216af.js",
     "service-worker.js": "/whatoeato/service-worker.js",
     "static/css/2.e7bc86a4.chunk.css.map": "/whatoeato/static/css/2.e7bc86a4.chunk.css.map",
-    "static/css/main.10734000.chunk.css.map": "/whatoeato/static/css/main.10734000.chunk.css.map",
+    "static/css/main.f1bdf882.chunk.css.map": "/whatoeato/static/css/main.f1bdf882.chunk.css.map",
     "static/media/index.css": "/whatoeato/static/media/roboto-latin-900italic.ebf6d164.woff2"
   }
 }
