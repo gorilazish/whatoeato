@@ -54,6 +54,7 @@ function Dashboard(props: any) {
           <button onClick={() => setShow(false)}>CLOSE</button>
           <CreateRecipe />
         </Modal>
+        <br />
         <RecipeList />
 
       </>

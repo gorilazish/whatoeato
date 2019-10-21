@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 // @ts-ignore
-import {
-  useCollectionData,
-} from 'react-firebase-hooks/firestore'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 import { db } from '../../db'
 import { useSession } from '../../auth'
@@ -13,10 +11,10 @@ const GridList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 10px;
-  
+
   @media (min-width: 640px) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 30px;
+    grid-gap: 35px;
   }
 `
 
@@ -25,7 +23,6 @@ export default function RecipeList() {
   const [values, loading, error] = useCollectionData(
     db
       .collection('recipes')
-
       .where('userId', '==', user!.uid)
       .orderBy('title', 'asc'),
     { idField: 'id' }

@@ -7,9 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useAuth } from '../../auth'
 
 import { UserContext } from '../../UserContext'
-import {
-  CircularProgress,
-} from '@material-ui/core'
+import { CircularProgress } from '@material-ui/core'
 import Login from '../Login/Login'
 import Signup from '../Signup/Signup'
 import Dashboard from '../Dashboard/Dashboard'
@@ -40,7 +38,6 @@ const ContentWrapper = styled.div`
 function App(props: any) {
   // @ts-ignore
   const { initializing, user } = useAuth(firebase.auth())
-
   return initializing !== true ? (
     <Container>
       <ContentWrapper>
@@ -54,6 +51,7 @@ function App(props: any) {
           }}
         >
           <MuiThemeProvider theme={theme}>
+            {/* <Router basename='/whatoeato'> */}
             <Router>
               <Switch>
                 <Route exact path="/" component={Dashboard} />
@@ -66,10 +64,10 @@ function App(props: any) {
       </ContentWrapper>
     </Container>
   ) : (
-      <div id="loader">
-        <CircularProgress />
-      </div>
-    )
+    <div id="loader">
+      <CircularProgress />
+    </div>
+  )
 }
 
 // @ts-ignore

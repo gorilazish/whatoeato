@@ -22,16 +22,22 @@ const ContentWrapper = styled.div`
 `
 
 const CardContent = styled.div`
-  width: 80%;
+  width: 75%;
   margin: 0 auto;
-  background: white;
-  margin-top: -30px;
-  padding: 30px 10px;
+  background-color: #fff9f9;
+  margin-top: -40px;
+  padding: 10px 15px;
+  text-align: center;
+
+  :hover {
+    box-shadow: 0 0.5em 0.5em -0.4em rgba(33, 33, 33, 0.2);
+    transform: translateY(-0.25em);
+  }
 `
 
 const CardMedia = styled.div`
   height: 100%;
-  padding-top: 56.25%;
+  padding-top: 75%;
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
@@ -75,24 +81,23 @@ export default function Recipe({
       <ContentWrapper>
         <div>
           {image && <CardMedia style={{ backgroundImage: `url(${image})` }} />}
-
         </div>
         <CardContent onClick={handleCardClick}>
-
-          <Typography variant="h5" component="h2">
-            {title}
-          </Typography>
-          <Typography>{description}</Typography>
-          <IconButton aria-label="delete" onClick={handleDeleteClick}>
-            <DeleteIcon />
-          </IconButton>
+          <h2 style={{ fontSize: '18px' }}>{title}</h2>
         </CardContent>
-
       </ContentWrapper>
 
       <Modal isOpen={isFullViewOpen}>
         <button onClick={handleCardClick}>CLOSE</button>
-        {image && <CardMedia style={{ backgroundImage: `url(${image})`, height: 0, paddingTop: '25%' }} />}
+        {image && (
+          <CardMedia
+            style={{
+              backgroundImage: `url(${image})`,
+              height: 0,
+              paddingTop: '25%',
+            }}
+          />
+        )}
 
         <Typography variant="h5" component="h2">
           {title}
@@ -109,16 +114,16 @@ export default function Recipe({
           {relatedLinks.length > 0 &&
             relatedLinks.slice(0, 3).map((item, index) => (
               <a href={item.link} key={index}>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography color="textSecondary" gutterBottom>
                   {item.title}
                 </Typography>
               </a>
             ))}
         </List>
         <Typography>{description}</Typography>
+        <IconButton aria-label="delete" onClick={handleDeleteClick}>
+          <DeleteIcon />
+        </IconButton>
       </Modal>
     </MyCard>
   )

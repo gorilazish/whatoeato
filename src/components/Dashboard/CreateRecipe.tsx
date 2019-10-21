@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 // @ts-ignore
 import { withRouter } from 'react-router-dom'
+import styled from '@emotion/styled'
 import {
   Avatar,
   Button,
@@ -13,6 +14,7 @@ import {
   TextField,
 } from '@material-ui/core'
 import DoneIcon from '@material-ui/icons/Done'
+import config from '../../firebaseConfig'
 import { createEntry } from '../../db'
 import { useSession } from '../../auth'
 
@@ -25,9 +27,31 @@ export interface Ingredient {
   amount: string
 }
 
+const searchGoogleRecipes = async (title: string) => {
+  try {
+    const searchStringPostfix = 'recipe'
+    const url = `https://www.googleapis.com/customsearch/v1?key=${config.googleCustomSearchApiKey}&cx=007051031288274791484:letviqy3cr1&q=${title}%20${searchStringPostfix}`
+    const json = await (await fetch(url)).json()
+    return json
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const CardMedia = styled.div`
+  height: 100%;
+  padding-top: 56.25%;
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`
+
 function CreateRecipe({ history }: Props) {
   const user = useSession()
   const [title, setTitle] = useState('')
+  const [images, setImages] = useState([])
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [currentIngredientName, setCurrentIngredientName] = useState('')
   const [currentIngredientAmount, setCurrentIngredientAmount] = useState('')
   const [ingredients, setIngredients] = useState<Ingredient[]>([
@@ -48,6 +72,7 @@ function CreateRecipe({ history }: Props) {
         description,
         recipeLink,
         ingredients,
+        image: images[activeImageIndex],
       }
       createEntry(newRecipe)
     }
@@ -84,14 +109,76 @@ function CreateRecipe({ history }: Props) {
     }
   }
 
+  const handleTitleBlur = async () => {
+    if (!title) return
+    const relatedGoogleRecipes = await searchGoogleRecipes(title)
+
+    if (relatedGoogleRecipes.items && relatedGoogleRecipes.items.length > 0) {
+      const relatedLinks = relatedGoogleRecipes.items
+      const recipeImages: string[] = []
+      // @ts-ignore
+      relatedLinks.forEach(item => {
+        let image
+        if (item.pagemap) {
+          if (item.pagemap.cse_thumbnail) {
+            image = item.pagemap.cse_thumbnail[0].src
+          }
+          if (item.pagemap.cse_image) {
+            image = item.pagemap.cse_image[0].src
+          }
+          if (item.pagemap.image) {
+            image = item.pagemap.image[0].src
+          }
+        }
+
+        if (image) {
+          recipeImages.push(image)
+        }
+      })
+
+      if (recipeImages.length > 0) {
+        // @ts-ignore
+        setImages(recipeImages)
+      }
+    }
+  }
+
   return (
     <form
       // @ts-ignore
       onSubmit={e => e.preventDefault() && false}
     >
+      <div>
+        <Button
+          onClick={() =>
+            setActiveImageIndex(
+              activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1
+            )
+          }
+        >
+          Prev
+        </Button>
+        {activeImageIndex}
+        {images && images[activeImageIndex] && (
+          <CardMedia
+            style={{ backgroundImage: `url(${images[activeImageIndex]})` }}
+          ></CardMedia>
+        )}
+        <Button
+          onClick={() =>
+            setActiveImageIndex(
+              activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1
+            )
+          }
+        >
+          Next
+        </Button>
+      </div>
       <FormControl margin="normal" required fullWidth>
         <InputLabel htmlFor="name">Name that stuff</InputLabel>
         <Input
+          // @ts-ignore
+          onBlur={handleTitleBlur}
           id="title"
           name="title"
           autoComplete="off"
@@ -188,16 +275,6 @@ function CreateRecipe({ history }: Props) {
         onClick={handleSubmit}
       >
         Add
-      </Button>
-
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="secondary"
-        onClick={history.goBack}
-      >
-        Back
       </Button>
     </form>
   )
