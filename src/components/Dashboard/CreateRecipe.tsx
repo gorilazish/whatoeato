@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 // @ts-ignore
-import { withRouter } from 'react-router-dom'
 import styled from '@emotion/styled'
 import {
   Avatar,
@@ -18,9 +17,7 @@ import config from '../../firebaseConfig'
 import { createEntry } from '../../db'
 import { useSession } from '../../auth'
 
-type Props = {
-  history: any
-}
+type Props = {}
 
 export interface Ingredient {
   name: string
@@ -47,7 +44,7 @@ const CardMedia = styled.div`
   background-position: center;
 `
 
-function CreateRecipe({ history }: Props) {
+function CreateRecipe(props: Props) {
   const user = useSession()
   const [title, setTitle] = useState('')
   const [images, setImages] = useState([])
@@ -280,4 +277,4 @@ function CreateRecipe({ history }: Props) {
   )
 }
 
-export default withRouter(CreateRecipe)
+export default CreateRecipe

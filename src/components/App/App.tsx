@@ -1,8 +1,7 @@
 import React from 'react'
 import * as firebase from 'firebase/app'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-// @ts-ignore
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Router, Link } from '@reach/router'
 
 import { useAuth } from '../../auth'
 
@@ -51,13 +50,11 @@ function App(props: any) {
           }}
         >
           <MuiThemeProvider theme={theme}>
-            {/* <Router basename='/whatoeato'> */}
+            {/* <Router basename="/whatoeato"> */}
             <Router>
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-              </Switch>
+              <Dashboard path="/" />
+              <Login path="/login" />
+              <Signup path="/signup" />
             </Router>
           </MuiThemeProvider>
         </UserContext.Provider>

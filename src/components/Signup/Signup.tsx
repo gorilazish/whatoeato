@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
-// @ts-ignore
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from '@reach/router'
 import { createUserWithEmail } from '../../auth'
 
 // @ts-ignore
@@ -81,5 +80,4 @@ function Signup(props) {
   )
 }
 
-// @ts-ignore
-export default withRouter(Signup)
+export default Signup

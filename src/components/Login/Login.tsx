@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
-// @ts-ignore
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from '@reach/router'
 import { loginWithEmail } from '../../auth'
 
 // @ts-ignore
-function SignIn(props) {
+function Login(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   async function handleLoginClick() {
     try {
       await loginWithEmail(email, password)
-      props.history.replace('/')
+      props.navigate('/', { replace: true })
     } catch (error) {
       alert(error.message)
     }
@@ -68,5 +67,4 @@ function SignIn(props) {
   )
 }
 
-// @ts-ignore
-export default withRouter(SignIn)
+export default Login
