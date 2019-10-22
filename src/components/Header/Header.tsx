@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { jsx, css } from '@emotion/core'
 
 import { signOut } from '../../auth'
 
@@ -34,16 +33,14 @@ export default function Header({ user }: any) {
             Hello {user.displayName}
           </Typography>
         ) : (
-            <Typography component="h1" variant="h5">
-              Welcome
-        </Typography>
-          )}
+          <Typography component="h1" variant="h5">
+            Welcome
+          </Typography>
+        )}
 
+        <div></div>
         <div>
-
-        </div>
-        <div>
-          {user &&
+          {user && (
             <Button
               type="submit"
               variant="contained"
@@ -51,8 +48,8 @@ export default function Header({ user }: any) {
               onClick={handleLogoutClick}
             >
               Logout
-      </Button>
-          }
+            </Button>
+          )}
         </div>
       </ContentWrapper>
     </Container>

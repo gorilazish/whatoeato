@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
-// @ts-ignore
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 import { db } from '../../db'
 import { useSession } from '../../auth'
-import Recipe from './Recipe'
+import RecipeCard from './RecipeCard'
 
 const GridList = styled.div`
   display: grid;
@@ -27,7 +26,6 @@ export default function RecipeList() {
       .orderBy('title', 'asc'),
     { idField: 'id' }
   )
-  console.log(values)
 
   // @ts-ignore
   const userRecipes: any[] = values
@@ -36,7 +34,7 @@ export default function RecipeList() {
       {userRecipes &&
         userRecipes.length > 0 &&
         userRecipes.map((item, index) => (
-          <Recipe key={index} id={item.id} title={item.title} {...item} />
+          <RecipeCard key={index} id={item.id} title={item.title} {...item} />
         ))}
     </GridList>
   )

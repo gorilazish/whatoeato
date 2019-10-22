@@ -47,6 +47,7 @@ function Dashboard(props: any) {
       </Modal>
       <br />
       <RecipeList />
+      {props.children}
     </>
   )
 }
