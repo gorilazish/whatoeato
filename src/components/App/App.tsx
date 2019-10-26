@@ -24,7 +24,7 @@ const Container = styled.main`
 `
 
 const ContentWrapper = styled.div`
-  margin-top: 60px;
+  margin-top: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;

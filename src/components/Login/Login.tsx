@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
-import { Link } from '@reach/router'
+import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { loginWithEmail } from '../../auth'
+import Button from '../Button/Button'
 
 // @ts-ignore
 function Login(props) {
@@ -22,6 +22,7 @@ function Login(props) {
       // @ts-ignore
       onSubmit={e => e.preventDefault() && false}
     >
+      <h1>Login with existing account</h1>
       <FormControl margin="normal" required fullWidth>
         <InputLabel htmlFor="email">Email Address</InputLabel>
         <Input
@@ -44,24 +45,8 @@ function Login(props) {
           onChange={e => setPassword(e.target.value)}
         />
       </FormControl>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        onClick={handleLoginClick}
-      >
+      <Button type="submit" onClick={handleLoginClick}>
         Sign in
-      </Button>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="secondary"
-        component={Link}
-        to="/signup"
-      >
-        Signup
       </Button>
     </form>
   )

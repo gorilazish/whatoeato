@@ -3,22 +3,27 @@ import styled from '@emotion/styled'
 
 import { signOut } from '../../auth'
 
-import { Button, Typography } from '@material-ui/core'
+import Button from '../Button/Button'
 
 const Container = styled.nav`
   position: fixed;
   top: 0;
-  height: 60px;
   width: 100%;
-  border-bottom: 2px solid coral;
   background: white;
   z-index: 10;
 `
 const ContentWrapper = styled.div`
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 1fr 2fr 1fr;
   margin: 0 auto;
   padding: 10px;
+`
+
+const Utils = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export default function Header({ user }: any) {
@@ -28,29 +33,19 @@ export default function Header({ user }: any) {
   return (
     <Container>
       <ContentWrapper>
-        {user && user.displayName ? (
-          <Typography component="h1" variant="h5">
-            Hello {user.displayName}
-          </Typography>
-        ) : (
-          <Typography component="h1" variant="h5">
-            Welcome
-          </Typography>
-        )}
+        <Utils>
+          <Button to="/">Home</Button>
+        </Utils>
 
-        <div></div>
-        <div>
-          {user && (
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              onClick={handleLogoutClick}
-            >
+        {user && <div></div>}
+        {user && (
+          <Utils>
+            <h3>{user.displayName}</h3>
+            <Button type="submit" onClick={handleLogoutClick}>
               Logout
             </Button>
-          )}
-        </div>
+          </Utils>
+        )}
       </ContentWrapper>
     </Container>
   )

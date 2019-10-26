@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
-import { Link } from '@reach/router'
+import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { createUserWithEmail } from '../../auth'
+import Button from '../Button/Button'
 
 // @ts-ignore
 function Signup(props) {
@@ -23,6 +23,7 @@ function Signup(props) {
       // @ts-ignore
       onSubmit={e => e.preventDefault() && false}
     >
+      <h1>Create a user</h1>
       <FormControl margin="normal" required fullWidth>
         <InputLabel htmlFor="name">Name</InputLabel>
         <Input
@@ -56,25 +57,8 @@ function Signup(props) {
         />
       </FormControl>
 
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        onClick={handleSignupClick}
-      >
+      <Button type="submit" onClick={handleSignupClick}>
         Signup
-      </Button>
-
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="secondary"
-        component={Link}
-        to="/login"
-      >
-        Go back to Login
       </Button>
     </form>
   )
