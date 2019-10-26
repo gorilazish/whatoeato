@@ -1,7 +1,6 @@
 import React from 'react'
 import * as firebase from 'firebase/app'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { Router, Link } from '@reach/router'
+import { Router } from '@reach/router'
 
 import { useAuth } from '../../auth'
 
@@ -10,12 +9,9 @@ import { CircularProgress } from '@material-ui/core'
 import Login from '../Login/Login'
 import Signup from '../Signup/Signup'
 import Dashboard from '../Dashboard/Dashboard'
-import Recipe from '../Dashboard/Recipe'
 import 'typeface-roboto'
 import styled from '@emotion/styled'
 import Header from '../Header/Header'
-
-const theme = createMuiTheme()
 
 const Container = styled.main`
   width: auto;
@@ -50,16 +46,12 @@ function App(props: any) {
             user: user,
           }}
         >
-          <MuiThemeProvider theme={theme}>
-            {/* <Router basename="/whatoeato"> */}
-            <Router>
-              <Dashboard path="/">
-                <Recipe path="/:id" />
-              </Dashboard>
-              <Login path="/login" />
-              <Signup path="/signup" />
-            </Router>
-          </MuiThemeProvider>
+          {/* <Router basename="/whatoeato" style={{ width: '100%' }}> */}
+          <Router primary={false} style={{ width: '100%' }}>
+            <Dashboard path="/*" />
+            <Login path="/login" />
+            <Signup path="/signup" />
+          </Router>
         </UserContext.Provider>
       </ContentWrapper>
     </Container>

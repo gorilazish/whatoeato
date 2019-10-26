@@ -1,16 +1,46 @@
-import React, { useState } from 'react'
-import { Button } from '@material-ui/core'
-import { Link } from '@reach/router'
+import React, { useState, useEffect } from 'react'
+import { Link, RouteComponentProps, Router } from '@reach/router'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+
 import { useSession } from '../../auth'
+import { db } from '../../db'
+
+import { Button } from '@material-ui/core'
 import RecipeList from './RecipeList'
-import Modal from '../Modal/Modal'
+import { Dialog } from '@reach/dialog'
 import CreateRecipe from './CreateRecipe'
+import Recipe from './Recipe'
+import Search from '../Search/Search'
 
-function Dashboard(props: any) {
-  const [show, setShow] = useState(false)
-  // @ts-ignore
+type Props = RouteComponentProps
+
+function Dashboard({ navigate }: Props) {
   const user = useSession()
+  const [recipes, setRecipes] = useState([])
+  const [isRandomViewMode, setRandomViewMode] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [values, loading, error] = useCollectionData(
+    db
+      .collection('recipes')
+      .where('userId', '==', user ? user.uid : '')
+      .orderBy('title', 'asc'),
+    { idField: 'id' }
+  )
 
+  useEffect(() => {
+    if (values) {
+      // @ts-ignore
+      setRecipes(values)
+    }
+  }, [loading])
+
+  const getRandomRecipeId = () => {
+    if (values && values.length > 0) {
+      const randomItem: any =
+        values[Math.floor(Math.random() * Math.floor(values.length))]
+      return randomItem.id
+    }
+  }
   return !user ? (
     <>
       <Button
@@ -37,17 +67,60 @@ function Dashboard(props: any) {
       <Button
         color="secondary"
         variant="contained"
-        onClick={() => setShow(!show)}
+        onClick={() => setShowCreateModal(!showCreateModal)}
       >
         New
       </Button>
-      <Modal isOpen={show}>
-        <button onClick={() => setShow(false)}>CLOSE</button>
+      <Button
+        color="secondary"
+        variant="contained"
+        onClick={() => {
+          if (values && values.length > 0 && navigate) {
+            const randomItem: any =
+              values[Math.floor(Math.random() * Math.floor(values.length))]
+            navigate(randomItem.id)
+            setRandomViewMode(true)
+          }
+        }}
+      >
+        I want to eat!
+      </Button>
+      <Dialog isOpen={showCreateModal}>
+        <button onClick={() => setShowCreateModal(false)}>CLOSE</button>
         <CreateRecipe />
-      </Modal>
+      </Dialog>
       <br />
-      <RecipeList />
-      {props.children}
+      {values && (
+        <Search
+          items={values as any[]}
+          fields={['title', 'description', 'ingredients', 'author']}
+          onResult={(result: any) => setRecipes(result)}
+        />
+      )}
+      <RecipeList recipes={recipes} />
+
+      <Router primary={false}>
+        <Recipe
+          path=":id"
+          onClose={() => {
+            setRandomViewMode(false)
+          }}
+          onBack={
+            isRandomViewMode
+              ? () => {
+                  window.history.back()
+                }
+              : undefined
+          }
+          onNext={
+            isRandomViewMode
+              ? () => {
+                  navigate && navigate(getRandomRecipeId())
+                }
+              : undefined
+          }
+        />
+      </Router>
     </>
   )
 }

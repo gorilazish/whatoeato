@@ -5,8 +5,9 @@ import { navigate } from '@reach/router'
 import { Ingredient } from '../../db'
 
 const MyCard = styled.div`
-  max-width: 345px;
-  width: 100%;
+  @media (min-width: 640px) {
+    max-width: 345px;
+  }
 `
 
 const ContentWrapper = styled.div`
