@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dc0ac397be36682870b11a396e0c48c3",
+    "revision": "6d342e67135dadd912b7b219547dc99e",
     "url": "/whatoeato/index.html"
   },
   {
-    "revision": "a22cdce147f456cd0039",
-    "url": "/whatoeato/static/css/2.e7bc86a4.chunk.css"
+    "revision": "86c2c3cb6ebac497c91b",
+    "url": "/whatoeato/static/css/2.200132ab.chunk.css"
   },
   {
-    "revision": "d18a6f913ab3d1730a44",
+    "revision": "186d0aa9c6fbbb42bfa6",
     "url": "/whatoeato/static/css/main.f1bdf882.chunk.css"
   },
   {
-    "revision": "a22cdce147f456cd0039",
-    "url": "/whatoeato/static/js/2.a0f6a117.chunk.js"
+    "revision": "86c2c3cb6ebac497c91b",
+    "url": "/whatoeato/static/js/2.801632ae.chunk.js"
   },
   {
-    "revision": "d18a6f913ab3d1730a44",
-    "url": "/whatoeato/static/js/main.1e6a8e1e.chunk.js"
+    "revision": "186d0aa9c6fbbb42bfa6",
+    "url": "/whatoeato/static/js/main.9b563adc.chunk.js"
   },
   {
     "revision": "2f3b140c2b2a2072f8a3",
