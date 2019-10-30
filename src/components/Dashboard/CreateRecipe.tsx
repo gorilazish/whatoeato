@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { RouteComponentProps } from '@reach/router'
 // @ts-ignore
 import styled from '@emotion/styled'
 import {
@@ -16,8 +17,11 @@ import DoneIcon from '@material-ui/icons/Done'
 import config from '../../firebaseConfig'
 import { createEntry } from '../../db'
 import { useSession } from '../../auth'
+import Modal from '../Modal/Modal'
 
-type Props = {}
+type Props = RouteComponentProps & {
+  onClose?: () => void
+}
 
 export interface Ingredient {
   name: string
@@ -44,7 +48,7 @@ const CardMedia = styled.div`
   background-position: center;
 `
 
-function CreateRecipe(props: Props) {
+function CreateRecipe({ onClose, navigate }: Props) {
   const user = useSession()
   const [title, setTitle] = useState('')
   const [images, setImages] = useState([])
@@ -72,6 +76,15 @@ function CreateRecipe(props: Props) {
         image: images[activeImageIndex],
       }
       createEntry(newRecipe)
+    }
+  }
+
+  const handleCloseRequest = () => {
+    if (onClose) {
+      onClose()
+    }
+    if (navigate) {
+      navigate('../')
     }
   }
 
@@ -141,139 +154,133 @@ function CreateRecipe(props: Props) {
   }
 
   return (
-    <form
-      // @ts-ignore
-      onSubmit={e => e.preventDefault() && false}
-    >
-      <div>
-        <Button
-          onClick={() =>
-            setActiveImageIndex(
-              activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1
-            )
-          }
-        >
-          Prev
-        </Button>
-        {activeImageIndex}
-        {images && images[activeImageIndex] && (
-          <CardMedia
-            style={{ backgroundImage: `url(${images[activeImageIndex]})` }}
-          ></CardMedia>
-        )}
-        <Button
-          onClick={() =>
-            setActiveImageIndex(
-              activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1
-            )
-          }
-        >
-          Next
-        </Button>
-      </div>
-      <FormControl margin="normal" required fullWidth>
-        <InputLabel htmlFor="name">Name that stuff</InputLabel>
-        <Input
-          // @ts-ignore
-          onBlur={handleTitleBlur}
-          id="title"
-          name="title"
-          autoComplete="off"
-          autoFocus
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          style={{ marginBottom: '50px' }}
-        />
-      </FormControl>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: '100px',
-          flexDirection: 'column',
-        }}
+    <Modal isOpen={true} onDismiss={handleCloseRequest}>
+      <form
+        // @ts-ignore
+        onSubmit={e => e.preventDefault() && false}
       >
-        <Typography component="h2" variant="h6" gutterBottom>
-          Ingredients list
-        </Typography>
-        {ingredients.map((item, index) => (
-          <Chip
-            key={`${item.name}-${indexedDB}`}
-            // avatar={
-            //   <Avatar
-            //     alt="Natacha"
-            //     src="https://res.cloudinary.com/teepublic/image/private/s--hpEAW5us--/t_Resized%20Artwork/c_fit,g_north_west,h_954,w_954/co_fffffe,e_outline:48/co_fffffe,e_outline:inner_fill:48/co_ffffff,e_outline:48/co_ffffff,e_outline:inner_fill:48/co_bbbbbb,e_outline:3:1000/c_mpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_jpg,h_630,q_90,w_630/v1502933243/production/designs/1827343_0.jpg"
-            //   />
-            // }
-            label={
-              // item.name ? (
-              //   <div>
-              //     <p>{`${item.name} - ${item.amount}`}</p>
-              //   </div>
-              // ) :
-
-              <div
-                style={{
-                  display: 'flex',
-                }}
-              >
-                <InputBase
-                  value={item.name || currentIngredientName}
-                  onChange={e => setCurrentIngredientName(e.target.value)}
-                  placeholder="Name"
-                  disabled={!!item.name}
-                />
-                <InputBase
-                  value={item.amount || currentIngredientAmount}
-                  onChange={e => setCurrentIngredientAmount(e.target.value)}
-                  placeholder="Amount"
-                  disabled={!!item.amount}
-                />
-              </div>
+        <div>
+          <Button
+            onClick={() =>
+              setActiveImageIndex(
+                activeImageIndex === 0
+                  ? images.length - 1
+                  : activeImageIndex - 1
+              )
             }
-            onDelete={handleIngredientActionClick(item)}
-            deleteIcon={item.name ? undefined : <DoneIcon />}
-            style={{ height: '100%', marginBottom: '15px', padding: '5px' }}
-          />
-        ))}
-
-        <FormControl margin="normal" fullWidth>
-          <TextField
-            id="description"
-            name="description"
-            label="Description"
-            multiline
-            rows="4"
-            rowsMax="10"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            margin="normal"
-          />
-        </FormControl>
-        <FormControl margin="normal" fullWidth>
-          <InputLabel htmlFor="name">Recipe link</InputLabel>
+          >
+            Prev
+          </Button>
+          {activeImageIndex}
+          {images && images[activeImageIndex] && (
+            <CardMedia
+              style={{ backgroundImage: `url(${images[activeImageIndex]})` }}
+            ></CardMedia>
+          )}
+          <Button
+            onClick={() =>
+              setActiveImageIndex(
+                activeImageIndex === images.length - 1
+                  ? 0
+                  : activeImageIndex + 1
+              )
+            }
+          >
+            Next
+          </Button>
+        </div>
+        <FormControl margin="normal" required fullWidth>
+          <InputLabel htmlFor="name">Name that stuff</InputLabel>
           <Input
-            id="recipeLink"
-            name="recipeLink"
+            // @ts-ignore
+            onBlur={handleTitleBlur}
+            id="title"
+            name="title"
             autoComplete="off"
             autoFocus
-            value={recipeLink}
-            onChange={e => setRecipeLink(e.target.value)}
+            value={title}
+            onChange={e => setTitle(e.target.value)}
             style={{ marginBottom: '50px' }}
           />
         </FormControl>
-      </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '100px',
+            flexDirection: 'column',
+          }}
+        >
+          <Typography component="h2" variant="h6" gutterBottom>
+            Ingredients list
+          </Typography>
+          {ingredients.map((item, index) => (
+            <Chip
+              key={`${item.name}-${indexedDB}`}
+              label={
+                <div
+                  style={{
+                    display: 'flex',
+                  }}
+                >
+                  <InputBase
+                    value={item.name || currentIngredientName}
+                    onChange={e => setCurrentIngredientName(e.target.value)}
+                    placeholder="Name"
+                    disabled={!!item.name}
+                  />
+                  <InputBase
+                    value={item.amount || currentIngredientAmount}
+                    onChange={e => setCurrentIngredientAmount(e.target.value)}
+                    placeholder="Amount"
+                    disabled={!!item.amount}
+                  />
+                </div>
+              }
+              onDelete={handleIngredientActionClick(item)}
+              deleteIcon={item.name ? undefined : <DoneIcon />}
+              style={{ height: '100%', marginBottom: '15px', padding: '5px' }}
+            />
+          ))}
 
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="secondary"
-        onClick={handleSubmit}
-      >
-        Add
-      </Button>
-    </form>
+          <FormControl margin="normal" fullWidth>
+            <TextField
+              id="description"
+              name="description"
+              label="Description"
+              multiline
+              rows="4"
+              rowsMax="10"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              margin="normal"
+            />
+          </FormControl>
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="name">Recipe link</InputLabel>
+            <Input
+              id="recipeLink"
+              name="recipeLink"
+              autoComplete="off"
+              autoFocus
+              value={recipeLink}
+              onChange={e => setRecipeLink(e.target.value)}
+              style={{ marginBottom: '50px' }}
+            />
+          </FormControl>
+        </div>
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="secondary"
+          onClick={handleSubmit}
+        >
+          Add
+        </Button>
+      </form>
+    </Modal>
   )
 }
 

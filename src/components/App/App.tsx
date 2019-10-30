@@ -46,8 +46,13 @@ function App(props: any) {
             user: user,
           }}
         >
-          {/* <Router basename="/whatoeato" style={{ width: '100%' }}> */}
-          <Router primary={false} style={{ width: '100%' }}>
+          <Router
+            basepath={
+              process.env.NODE_ENV === 'production' ? '/whatoeato' : '/'
+            }
+            primary={false}
+            style={{ width: '100%' }}
+          >
             <Dashboard path="/*" />
             <Login path="/login" />
             <Signup path="/signup" />

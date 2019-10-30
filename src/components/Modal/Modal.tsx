@@ -1,40 +1,36 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { DialogOverlay, DialogContent } from '@reach/dialog'
 
-import ModalRoot from './ModalRoot'
+const StyledDialogOverlay = styled(DialogOverlay)`
+  display: flex;
+  align-items: flex-end;
+  z-index: 12;
 
-
-const Container = styled.div`
-    top: 0;
-    left: 0;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0, .5);
-    z-index: 11;
+  @media (min-width: 640px) {
+    display: block;
+  }
 `
 
-const ModalContainer = styled.div`
+const StyledDialogContent = styled(DialogContent)`
+  height: 60vh;
+  width: 100%;
+  overflow-y: auto;
+  margin: 0;
+
+  @media (min-width: 640px) {
     height: 70vh;
-    width: 80vw;
-    background: white;
-    padding: 5%;
-    overflow: auto;
+    width: 60vh;
+    margin: 10vh auto;
+  }
 `
 
-const Modal = ({ children, isOpen }: any) => {
-    return isOpen ? (
-        <ModalRoot>
-            <Container>
-                <ModalContainer>
-                    {children}
-                </ModalContainer>
-            </Container>
-        </ModalRoot>
-    ) : null
+const Modal = ({ children, isOpen, onDismiss }: any) => {
+  return (
+    <StyledDialogOverlay isOpen={isOpen} onDismiss={onDismiss}>
+      <StyledDialogContent>{children}</StyledDialogContent>
+    </StyledDialogOverlay>
+  )
 }
 
 export default Modal

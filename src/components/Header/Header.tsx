@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 
-import { signOut } from '../../auth'
-
-import Button from '../Button/Button'
+import Burger from '../Button/Burger'
+import Menu from '../Menu/Menu'
 
 const Container = styled.nav`
   position: fixed;
@@ -27,26 +26,21 @@ const Utils = styled.div`
 `
 
 export default function Header({ user }: any) {
-  async function handleLogoutClick() {
-    await signOut()
-  }
+  const [isMenuOpen, setMenuOpen] = useState(false)
   return (
     <Container>
       <ContentWrapper>
         <Utils>
-          <Button to="/">Home</Button>
+          <Burger
+            onClick={() => setMenuOpen(!isMenuOpen)}
+            isOpen={isMenuOpen}
+          />
         </Utils>
 
         {user && <div></div>}
-        {user && (
-          <Utils>
-            <h3>{user.displayName}</h3>
-            <Button type="submit" onClick={handleLogoutClick}>
-              Logout
-            </Button>
-          </Utils>
-        )}
+        {user && <Utils></Utils>}
       </ContentWrapper>
+      <Menu isOpen={isMenuOpen} />
     </Container>
   )
 }

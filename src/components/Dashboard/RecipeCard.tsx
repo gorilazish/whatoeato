@@ -2,7 +2,11 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { navigate } from '@reach/router'
 
-import { Ingredient } from '../../db'
+import { RecipeType } from './Recipe'
+
+type Props = RecipeType & {
+  style?: object
+}
 
 const MyCard = styled.div`
   @media (min-width: 640px) {
@@ -37,19 +41,7 @@ const CardMedia = styled.div`
   background-position: center;
 `
 
-export type RecipeProps = {
-  id: string
-  title: string
-  description?: string
-  recipeLink?: string
-  image?: string
-  author: string
-  ingredients?: Ingredient[]
-  relatedLinks?: any[]
-  style?: object
-}
-
-export default function RecipeCard({ id, title, image }: RecipeProps) {
+export default function RecipeCard({ id, title, ingredients, image }: Props) {
   const handleCardClick = (e: any) => {
     navigate(id)
   }
@@ -62,6 +54,7 @@ export default function RecipeCard({ id, title, image }: RecipeProps) {
         </div>
         <CardContent onClick={handleCardClick}>
           <h2 style={{ fontSize: '18px' }}>{title}</h2>
+          <p>{ingredients && ingredients.map(item => item.name).join(' | ')}</p>
         </CardContent>
       </ContentWrapper>
     </MyCard>

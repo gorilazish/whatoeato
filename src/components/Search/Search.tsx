@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styled from '@emotion/styled'
 import * as JsSearch from 'js-search'
 
 type Props = {
@@ -7,7 +8,14 @@ type Props = {
   onResult: Function
 }
 
-const Search = ({ items, fields, onResult }: Props) => {
+const StyledInput = styled.input`
+  border: none;
+  min-height: 40px;
+  padding: 10px;
+  background: lightgoldenrodyellow;
+`
+
+const Search = ({ items, fields, onResult, ...rest }: Props) => {
   const [search, setSearchInstance] = useState()
 
   useEffect(() => {
@@ -37,7 +45,9 @@ const Search = ({ items, fields, onResult }: Props) => {
   }
 
   return (
-    <input
+    <StyledInput
+      {...rest}
+      onClick={e => e.stopPropagation()}
       type="text"
       placeholder="search"
       onChange={handleSearchQueryChange}

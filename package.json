@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/js-search": "^1.4.0",
     "@types/reach__router": "^1.2.6",
+    "babel-plugin-emotion": "^10.0.22",
     "gh-pages": "^2.1.1"
   }
 }
