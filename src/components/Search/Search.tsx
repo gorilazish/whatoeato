@@ -6,6 +6,7 @@ type Props = {
   items: any[]
   fields: string[]
   onResult: Function
+  placeholder?: string
 }
 
 const StyledInput = styled.input`
@@ -46,11 +47,11 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
 
   return (
     <StyledInput
-      {...rest}
       onClick={e => e.stopPropagation()}
       type="text"
       placeholder="search"
       onChange={handleSearchQueryChange}
+      {...rest}
     />
   )
 }

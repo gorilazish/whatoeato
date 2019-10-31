@@ -19,11 +19,46 @@ import search from './magnifying-glass.png'
 
 type Props = RouteComponentProps
 
-const Menu = styled.div`
+const Container = styled.div``
+
+const Top = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  padding: 20px 0;
+`
+
+const CtaButton = styled(Button)`
+  width: 35vw;
+  margin: 10px 0 20px;
+  border: none;
+  background-color: white;
+  padding: 25px 15px;
+  font-family: inherit;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  animation: pulse-black 3s infinite;
+  :hover,
+  :focus {
+    animation: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes pulse-black {
+    0% {
+      box-shadow: 0 0 0 0 rgba(154, 97, 244, 0.2);
+    }
+
+    70% {
+      box-shadow: 0 0 0 10px rgba(154, 97, 244, 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgba(154, 97, 244, 0);
+    }
+  }
 `
 
 const AddButton = styled(Button)`
@@ -47,11 +82,57 @@ const AddButton = styled(Button)`
   }
 `
 
+const StyledSearch = styled(Search)`
+  background-color: white;
+  color: black;
+  margin: 50px 0 10px;
+  padding: 25px 15px;
+  font-size: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
+  width: 40vw;
+  transition: width 0.5s ease, transform 0.25s ease;
+  display: none;
+
+  @media (min-width: 640px) {
+    display: inherit;
+  }
+
+  ::placeholder {
+    color: gray;
+  }
+
+  :focus {
+    outline: none;
+    width: 80%;
+    animation: hoverEffect 0.25s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes hoverEffect {
+    0% {
+      box-shadow: 0 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
+    }
+    70% {
+      box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+    }
+    100% {
+      box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+    }
+  }
+`
+
 const SearchButton = styled(AddButton)`
   right: 30px;
   left: auto;
   display: flex;
   align-items: center;
+  display: none;
+
+  @media (max-width: 640px) {
+    display: inherit;
+  }
 `
 
 const Icon = styled.div`
@@ -98,11 +179,31 @@ function Dashboard({ navigate }: Props) {
   return !user ? (
     <Frontpage />
   ) : (
-    <>
-      <Menu>
+    <Container>
+      <Top>
+        <CtaButton
+          onClick={() => {
+            if (values && values.length > 0 && navigate) {
+              const randomItem: any =
+                values[Math.floor(Math.random() * Math.floor(values.length))]
+              navigate(randomItem.id)
+              setRandomViewMode(true)
+            }
+          }}
+        >
+          I want to eat!
+        </CtaButton>
         <AddButton onClick={() => navigate && navigate('create')}>
           <Icon style={{ backgroundImage: `url(${plus})` }} />
         </AddButton>
+        {values && (
+          <StyledSearch
+            placeholder={'search food'}
+            items={values as any[]}
+            fields={['title', 'description', 'ingredients', 'author']}
+            onResult={(result: any) => setRecipes(result)}
+          />
+        )}
         <SearchButton
           onClick={() => setShowSearch(!showSearch)}
           style={{
@@ -132,19 +233,7 @@ function Dashboard({ navigate }: Props) {
           )}
           <Icon style={{ backgroundImage: `url(${search})` }} />
         </SearchButton>
-        <Button
-          onClick={() => {
-            if (values && values.length > 0 && navigate) {
-              const randomItem: any =
-                values[Math.floor(Math.random() * Math.floor(values.length))]
-              navigate(randomItem.id)
-              setRandomViewMode(true)
-            }
-          }}
-        >
-          I want to eat!
-        </Button>
-      </Menu>
+      </Top>
       <br />
 
       <RecipeList recipes={recipes} />
@@ -172,7 +261,7 @@ function Dashboard({ navigate }: Props) {
           }
         />
       </Router>
-    </>
+    </Container>
   )
 }
 
