@@ -28,6 +28,10 @@ const Top = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 20px 0;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
 `
 
 const CtaButton = styled(Button)`
@@ -90,7 +94,7 @@ const AddButton = styled(Button)`
 const StyledSearch = styled(Search)`
   background-color: white;
   color: black;
-  margin: 50px 0 10px;
+  margin: 50px auto 30px;
   padding: 25px 15px;
   font-size: 1.5rem;
   text-align: center;
@@ -200,7 +204,7 @@ function Dashboard({ navigate }: Props) {
         {userData && (
           <RecipeQueue
             recipes={userData.queuedRecipeIds.map((id: string) =>
-              recipes.find((item: any) => item.id === id)
+              values.find((item: any) => item.id === id)
             )}
           />
         )}
@@ -208,14 +212,7 @@ function Dashboard({ navigate }: Props) {
         <AddButton onClick={() => navigate && navigate('create')}>
           <Icon style={{ backgroundImage: `url(${plus})` }} />
         </AddButton>
-        {values && (
-          <StyledSearch
-            placeholder={'search food'}
-            items={values as any[]}
-            fields={['title', 'description', 'ingredients', 'author']}
-            onResult={(result: any) => setRecipes(result)}
-          />
-        )}
+
         <SearchButton
           onClick={() => setShowSearch(!showSearch)}
           style={{
@@ -247,7 +244,15 @@ function Dashboard({ navigate }: Props) {
         </SearchButton>
       </Top>
       <br />
-
+      <h2>Recipes</h2>
+      {values && (
+        <StyledSearch
+          placeholder={'search food'}
+          items={values as any[]}
+          fields={['title', 'description', 'ingredients', 'author']}
+          onResult={(result: any) => setRecipes(result)}
+        />
+      )}
       {recipes && userData && recipes.length > 0 && (
         <RecipeList
           recipes={recipes.map((item: any) => {

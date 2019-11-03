@@ -6,8 +6,14 @@ import { removeRecipeFromQueue } from '../../db'
 import RecipeCard from './RecipeCard'
 
 const QueueContainer = styled.div`
-  padding: 20px 0;
-  max-width: 100%;
+  padding: 20px 20px;
+  width: 100vw;
+  background: lightpink;
+
+  @media (min-width: 640px) {
+    background: lightgrey;
+    width: 50%;
+  }
 `
 
 const HorizontalSlider = styled.div`
@@ -18,6 +24,13 @@ const HorizontalSlider = styled.div`
   scroll-snap-type: x proximity;
   padding-bottom: calc(0.75 * var(--gutter));
   margin-bottom: calc(-0.25 * var(--gutter));
+
+  grid-template-columns: ${({ itemCount }: any) => `repeat(${itemCount}, 60%)`};
+
+  @media (min-width: 640px) {
+    grid-template-columns: ${({ itemCount }: any) =>
+      `repeat(${itemCount}, 30%)`};
+  }
 `
 
 const RecipeQueue = ({ recipes }: any) => {
@@ -31,6 +44,7 @@ const RecipeQueue = ({ recipes }: any) => {
     <QueueContainer>
       <h2>My Queue</h2>
       <HorizontalSlider
+        itemCount={recipes.length}
         style={{
           // @ts-ignore
           'grid-template-columns': `repeat(${recipes.length}, 60%)`,
