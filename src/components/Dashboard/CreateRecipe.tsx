@@ -3,7 +3,6 @@ import { RouteComponentProps } from '@reach/router'
 // @ts-ignore
 import styled from '@emotion/styled'
 import {
-  Avatar,
   Button,
   FormControl,
   Input,

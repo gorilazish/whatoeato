@@ -4,7 +4,6 @@ import {
   useCollectionData,
   useDocumentData,
 } from 'react-firebase-hooks/firestore'
-import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 
 import { useSession } from '../../auth'
@@ -12,7 +11,6 @@ import { db, addRecipeToQueue } from '../../db'
 
 import RecipeList from './RecipeList'
 import RecipeQueue from './RecipeQueue'
-import { Dialog } from '@reach/dialog'
 import CreateRecipe from './CreateRecipe'
 import Recipe from './Recipe'
 import Search from '../Search/Search'
@@ -234,10 +232,10 @@ function Dashboard({ navigate }: Props) {
                 visibility: showSearch ? 'visible' : 'hidden',
                 padding: 0,
                 marginRight: showSearch && '15px',
-                'border-bottom-left-radius': '50px',
-                'border-top-left-radius': '50px',
-                'font-size': '1.2rem',
-                'padding-left': showSearch ? '20px' : '0',
+                borderBottomLeftRadius: '50px',
+                borderTopLeftRadius: '50px',
+                fontSize: '1.2rem',
+                paddingLeft: showSearch ? '20px' : '0',
               }}
               items={values as any[]}
               fields={['title', 'description', 'ingredients', 'author']}

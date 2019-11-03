@@ -33,7 +33,7 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
     })
     searchInstance.addDocuments(items)
     setSearchInstance(searchInstance)
-  }, [items])
+  }, [items, fields])
 
   const handleSearchQueryChange = (e: any) => {
     if (!search) return
