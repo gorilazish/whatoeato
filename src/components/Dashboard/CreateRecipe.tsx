@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 // @ts-ignore
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import {
-  Button,
   FormControl,
   Input,
   InputLabel,
-  Chip,
   InputBase,
   Typography,
   TextField,
 } from '@material-ui/core'
-import DoneIcon from '@material-ui/icons/Done'
 import config from '../../firebaseConfig'
 import { createRecipe } from '../../db'
 import { useSession } from '../../auth'
 import Modal from '../Modal/Modal'
+
+import imgPlaceholder from './food-placeholder.png'
+import Button from '../Button/Button'
+import { whileStatement } from '@babel/types'
 
 type Props = RouteComponentProps & {
   onClose?: () => void
@@ -38,13 +40,47 @@ const searchGoogleRecipes = async (title: string) => {
   }
 }
 
+const Container = styled.div`
+  padding: 20px;
+`
+
 const CardMedia = styled.div`
+  position: relative;
   height: 100%;
   padding-top: 56.25%;
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+`
+
+const SliderControl = styled.div`
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const IngredientCard = styled.div`
+  margin-top: 10px;
+  padding: 15px 30px;
+  box-shadow: 0 2px 9px -2px rgba(33, 33, 33, 0.2);
+`
+
+const ReturnButton = styled(Button)`
+  background: transparent;
+  padding: 7px 12px;
+  border: 2px solid lightgrey;
+  color: lightgrey;
+  border-radius: 4px;
+  font-size: 0.9rem;
+
+  :hover {
+    border-color: darkgray;
+    color: darkgray;
+  }
 `
 
 function CreateRecipe({ onClose, navigate }: Props) {
@@ -62,6 +98,21 @@ function CreateRecipe({ onClose, navigate }: Props) {
   ])
   const [description, setDescription] = useState('')
   const [recipeLink, setRecipeLink] = useState('')
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleUserKeyPress)
+
+    return () => {
+      window.removeEventListener('keydown', handleUserKeyPress)
+    }
+  })
+
+  const handleUserKeyPress = (e: any) => {
+    const { keyCode } = e
+    if (keyCode === 13) {
+      console.log('enter')
+    }
+  }
 
   const handleSubmit = (e: any) => {
     if (user) {
@@ -103,7 +154,8 @@ function CreateRecipe({ onClose, navigate }: Props) {
     setIngredients(updatedIngredients)
   }
 
-  const handleIngredientActionClick = (ingredient: Ingredient) => () => {
+  const handleIngredientActionClick = (ingredient: Ingredient) => (e: any) => {
+    e.preventDefault()
     if (
       ingredient.name === '' &&
       currentIngredientName !== '' &&
@@ -158,65 +210,80 @@ function CreateRecipe({ onClose, navigate }: Props) {
         // @ts-ignore
         onSubmit={e => e.preventDefault() && false}
       >
-        <div>
-          <Button
-            onClick={() =>
-              setActiveImageIndex(
-                activeImageIndex === 0
-                  ? images.length - 1
-                  : activeImageIndex - 1
-              )
-            }
-          >
-            Prev
-          </Button>
-          {activeImageIndex}
-          {images && images[activeImageIndex] && (
-            <CardMedia
-              style={{ backgroundImage: `url(${images[activeImageIndex]})` }}
-            ></CardMedia>
-          )}
-          <Button
-            onClick={() =>
-              setActiveImageIndex(
-                activeImageIndex === images.length - 1
-                  ? 0
-                  : activeImageIndex + 1
-              )
-            }
-          >
-            Next
-          </Button>
-        </div>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="name">Name that stuff</InputLabel>
-          <Input
-            // @ts-ignore
-            onBlur={handleTitleBlur}
-            id="title"
-            name="title"
-            autoComplete="off"
-            autoFocus
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            style={{ marginBottom: '50px' }}
-          />
-        </FormControl>
-        <div
+        <CardMedia
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '100px',
-            flexDirection: 'column',
+            backgroundImage: `url(${
+              images[activeImageIndex]
+                ? images[activeImageIndex]
+                : imgPlaceholder
+            })`,
           }}
         >
-          <Typography component="h2" variant="h6" gutterBottom>
-            Ingredients list
-          </Typography>
-          {ingredients.map((item, index) => (
-            <Chip
-              key={`${item.name}-${indexedDB}`}
-              label={
+          {images[activeImageIndex] && (
+            <SliderControl>
+              <Button
+                style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  border: 'none',
+                  color: 'white',
+                }}
+                onClick={() =>
+                  setActiveImageIndex(
+                    activeImageIndex === 0
+                      ? images.length - 1
+                      : activeImageIndex - 1
+                  )
+                }
+              >
+                Prev
+              </Button>
+              <Button
+                style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  border: 'none',
+                  color: 'white',
+                }}
+                onClick={() =>
+                  setActiveImageIndex(
+                    activeImageIndex === images.length - 1
+                      ? 0
+                      : activeImageIndex + 1
+                  )
+                }
+              >
+                Next
+              </Button>
+            </SliderControl>
+          )}
+        </CardMedia>
+        <Container>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="name">Meal title</InputLabel>
+            <Input
+              autoFocus
+              // @ts-ignore
+              onBlur={handleTitleBlur}
+              id="title"
+              name="title"
+              autoComplete="off"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              style={{ marginBottom: '50px' }}
+            />
+          </FormControl>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '100px',
+              flexDirection: 'column',
+            }}
+          >
+            <Typography component="h2" variant="h6" gutterBottom>
+              Ingredients list
+            </Typography>
+            {ingredients.map((item, index) => (
+              <IngredientCard key={`${item.name}-${index}`}>
                 <div
                   style={{
                     display: 'flex',
@@ -234,50 +301,49 @@ function CreateRecipe({ onClose, navigate }: Props) {
                     placeholder="Amount"
                     disabled={!!item.amount}
                   />
+                  <ReturnButton onClick={handleIngredientActionClick(item)}>
+                    {item.name ? 'Remove' : 'Enter'}
+                  </ReturnButton>
                 </div>
-              }
-              onDelete={handleIngredientActionClick(item)}
-              deleteIcon={item.name ? undefined : <DoneIcon />}
-              style={{ height: '100%', marginBottom: '15px', padding: '5px' }}
-            />
-          ))}
+              </IngredientCard>
+            ))}
 
-          <FormControl margin="normal" fullWidth>
-            <TextField
-              id="description"
-              name="description"
-              label="Description"
-              multiline
-              rows="4"
-              rowsMax="10"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              margin="normal"
-            />
-          </FormControl>
-          <FormControl margin="normal" fullWidth>
-            <InputLabel htmlFor="name">Recipe link</InputLabel>
-            <Input
-              id="recipeLink"
-              name="recipeLink"
-              autoComplete="off"
-              autoFocus
-              value={recipeLink}
-              onChange={e => setRecipeLink(e.target.value)}
-              style={{ marginBottom: '50px' }}
-            />
-          </FormControl>
-        </div>
+            <FormControl margin="normal" fullWidth>
+              <TextField
+                id="description"
+                name="description"
+                label="Description"
+                multiline
+                rows="4"
+                rowsMax="10"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                margin="normal"
+              />
+            </FormControl>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="name">Recipe link</InputLabel>
+              <Input
+                id="recipeLink"
+                name="recipeLink"
+                autoComplete="off"
+                value={recipeLink}
+                onChange={e => setRecipeLink(e.target.value)}
+                style={{ marginBottom: '50px' }}
+              />
+            </FormControl>
+          </div>
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          onClick={handleSubmit}
-        >
-          Add
-        </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit}
+          >
+            Add
+          </Button>
+        </Container>
       </form>
     </Modal>
   )

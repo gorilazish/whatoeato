@@ -15,8 +15,10 @@ const QueueContainer = styled.div`
     width: 50%;
   }
 `
-
-const HorizontalSlider = styled.div`
+type StyledSliderProps = {
+  itemCount: number
+}
+const HorizontalSlider = styled.div<StyledSliderProps>`
   display: grid;
   grid-gap: 10px;
 
@@ -43,13 +45,7 @@ const RecipeQueue = ({ recipes }: any) => {
   return (
     <QueueContainer>
       <h2>My Queue</h2>
-      <HorizontalSlider
-        itemCount={recipes.length}
-        style={{
-          // @ts-ignore
-          'grid-template-columns': `repeat(${recipes.length}, 60%)`,
-        }}
-      >
+      <HorizontalSlider itemCount={recipes.length}>
         {recipes.map((item: any, index: number) => (
           <RecipeCard
             key={index}

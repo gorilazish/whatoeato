@@ -17,6 +17,7 @@ const StyledDialogContent = styled(DialogContent)`
   width: 100%;
   overflow-y: auto;
   margin: 0;
+  padding: 0;
 
   @media (min-width: 640px) {
     height: 70vh;
