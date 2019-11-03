@@ -14,7 +14,6 @@ import RecipeQueue from './RecipeQueue'
 import CreateRecipe from './CreateRecipe'
 import Recipe from './Recipe'
 import Search from '../Search/Search'
-import Frontpage from '../Frontpage/Frontpage'
 import Button from '../Button/Button'
 import plus from './plus.png'
 import search from './magnifying-glass.png'
@@ -32,7 +31,6 @@ const Top = styled.div`
 `
 
 const CtaButton = styled(Button)`
-  width: 35vw;
   margin: 10px 0 20px;
   border: none;
   background-color: white;
@@ -41,11 +39,16 @@ const CtaButton = styled(Button)`
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  animation: pulse-black 3s infinite;
+  animation: pulse-black 2.5s infinite;
+  width: 100%;
   :hover,
   :focus {
     animation: none;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 640px) {
+    width: 35vw;
   }
 
   @keyframes pulse-black {
@@ -178,9 +181,7 @@ function Dashboard({ navigate }: Props) {
     }
   }
 
-  return !user ? (
-    <Frontpage />
-  ) : (
+  return (
     <Container>
       <Top>
         <CtaButton

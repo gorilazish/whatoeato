@@ -12,6 +12,7 @@ import Dashboard from '../Dashboard/Dashboard'
 import 'typeface-roboto'
 import styled from '@emotion/styled'
 import Header from '../Header/Header'
+import Frontpage from '../Frontpage/Frontpage'
 
 const Container = styled.main`
   width: auto;
@@ -24,7 +25,7 @@ const Container = styled.main`
 `
 
 const ContentWrapper = styled.div`
-  margin-top: 80px;
+  margin-top: 52px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,7 +54,7 @@ function App(props: any) {
             primary={false}
             style={{ width: '100%' }}
           >
-            <Dashboard path="/*" />
+            {user ? <Dashboard path="/*" /> : <Frontpage path="/*" />}
             <Login path="/login" />
             <Signup path="/signup" />
           </Router>

@@ -20,12 +20,14 @@ type Props = {
 
 export default function RecipeList({ recipes }: Props) {
   return (
-    <GridList>
-      {recipes &&
-        recipes.length > 0 &&
-        recipes.map((item, index) => (
-          <RecipeCard key={index} id={item.id} title={item.title} {...item} />
-        ))}
-    </GridList>
+    <div>
+      <GridList>
+        {recipes &&
+          recipes.length > 0 &&
+          recipes.map((item, index) => (
+            <RecipeCard key={index} id={item.id} title={item.title} {...item} />
+          ))}
+      </GridList>
+    </div>
   )
 }

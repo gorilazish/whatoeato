@@ -51,6 +51,7 @@ export default function RecipeCard({
   image,
   onCtaClick,
   ctaLabel,
+  ...rest
 }: Props) {
   const handleCardClick = (e: any) => {
     navigate(id)
@@ -63,7 +64,7 @@ export default function RecipeCard({
   }
 
   return (
-    <MyCard>
+    <MyCard {...rest}>
       <ContentWrapper>
         <div>
           {image && <CardMedia style={{ backgroundImage: `url(${image})` }} />}

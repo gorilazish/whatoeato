@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   grid-gap: 20px;
 `
 
-export default function Frontpage() {
+export default function Frontpage(props: any) {
   return (
     <Wrapper>
       <Button type="submit" to="/login">

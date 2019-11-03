@@ -58,7 +58,7 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
         relatedLinks: value.relatedLinks,
       } as RecipeType)
     }
-  }, [loading, value])
+  }, [loading])
 
   if (!loading && error) return <h1>{String(error)}</h1>
 
