@@ -3,9 +3,12 @@ import styled from '@emotion/styled'
 import { navigate } from '@reach/router'
 
 import { RecipeType } from './Recipe'
+import Button from '../Button/Button'
 
 type Props = RecipeType & {
   style?: object
+  onCtaClick?: Function
+  ctaLabel?: string
 }
 
 const MyCard = styled.div`
@@ -41,9 +44,22 @@ const CardMedia = styled.div`
   background-position: center;
 `
 
-export default function RecipeCard({ id, title, ingredients, image }: Props) {
+export default function RecipeCard({
+  id,
+  title,
+  ingredients,
+  image,
+  onCtaClick,
+  ctaLabel,
+}: Props) {
   const handleCardClick = (e: any) => {
     navigate(id)
+  }
+
+  const handleCtaClick = () => {
+    if (onCtaClick) {
+      onCtaClick(id)
+    }
   }
 
   return (
@@ -56,6 +72,7 @@ export default function RecipeCard({ id, title, ingredients, image }: Props) {
           <h2 style={{ fontSize: '18px' }}>{title}</h2>
           <p>{ingredients && ingredients.map(item => item.name).join(' | ')}</p>
         </CardContent>
+        {onCtaClick && <Button onClick={handleCtaClick}>{ctaLabel}</Button>}
       </ContentWrapper>
     </MyCard>
   )

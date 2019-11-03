@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
-import { useContext } from 'react'
+import { createUser } from './db'
 import { UserContext } from './UserContext'
 
 export const useSession = () => {
@@ -44,7 +44,14 @@ export const createUserWithEmail = async (
   password: string
 ) => {
   try {
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
+    const userData = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+
+    // Create user object in DB
+    if (userData.user) {
+      await createUser(userData.user.uid, { name })
+    }
 
     // @ts-ignore
     return firebase.auth().currentUser.updateProfile({
@@ -59,6 +66,11 @@ export const createUserWithEmail = async (
 export const getCurrentUsername = () => {
   const auth = firebase.auth()
   return auth.currentUser && auth.currentUser.displayName
+}
+
+export const getCurrentUser = () => {
+  const currentUser = firebase.auth().currentUser
+  return currentUser
 }
 
 export const signOut = () => firebase.auth().signOut()

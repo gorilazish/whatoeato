@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import styled from '@emotion/styled'
 
-import { deleteEntry, db } from '../../db'
+import { deleteRecipe, db } from '../../db'
 
 import { Ingredient } from '../../db'
 
@@ -63,7 +63,7 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
   if (!loading && error) return <h1>{String(error)}</h1>
 
   const handleDeleteClick = () => {
-    deleteEntry(id!)
+    deleteRecipe(id!)
   }
 
   const handleCloseRequest = () => {

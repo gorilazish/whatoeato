@@ -4,6 +4,7 @@ import debug from 'debug'
 import 'firebase/firestore'
 import 'firebase/auth'
 import config from './firebaseConfig'
+import { getCurrentUser } from './auth'
 
 const log = debug('app:db')
 
@@ -30,7 +31,15 @@ export interface Ingredient {
   amount: string
 }
 
-export const createEntry = (options: RecipeOptions) => {
+export const createUser = (id: string, userObject: any) => {
+  return db
+    .collection('users')
+    .doc(id)
+    .set(userObject)
+    .catch(err => console.log(err))
+}
+
+export const createRecipe = (options: RecipeOptions) => {
   log('save recipe: %o', options)
   return db.collection('recipes').add({
     ...options,
@@ -38,10 +47,32 @@ export const createEntry = (options: RecipeOptions) => {
   })
 }
 
-export const deleteEntry = (id: string) => {
+export const deleteRecipe = (id: string) => {
   log('delete: %s', id)
   return db
     .collection('recipes')
     .doc(id)
     .delete()
+}
+
+export const addRecipeToQueue = async (recipeId: string) => {
+  const user = getCurrentUser()
+
+  if (user) {
+    const userDoc = await db.collection('users').doc(user.uid)
+    return userDoc.update({
+      queuedRecipeIds: firebase.firestore.FieldValue.arrayUnion(recipeId),
+    })
+  }
+}
+
+export const removeRecipeFromQueue = async (recipeId: string) => {
+  const user = getCurrentUser()
+
+  if (user) {
+    const userDoc = await db.collection('users').doc(user.uid)
+    return userDoc.update({
+      queuedRecipeIds: firebase.firestore.FieldValue.arrayRemove(recipeId),
+    })
+  }
 }

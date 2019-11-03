@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, Router } from '@reach/router'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import {
+  useCollectionData,
+  useDocumentData,
+} from 'react-firebase-hooks/firestore'
 import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 
 import { useSession } from '../../auth'
-import { db } from '../../db'
+import { db, addRecipeToQueue } from '../../db'
 
 import RecipeList from './RecipeList'
+import RecipeQueue from './RecipeQueue'
 import { Dialog } from '@reach/dialog'
 import CreateRecipe from './CreateRecipe'
 import Recipe from './Recipe'
@@ -150,23 +154,23 @@ const Icon = styled.div`
 
 function Dashboard({ navigate }: Props) {
   const user = useSession()
-  const [recipes, setRecipes] = useState([])
+  const [recipes, setRecipes] = useState()
   const [isRandomViewMode, setRandomViewMode] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
-  const [values, loading, error] = useCollectionData(
+  const [values = []] = useCollectionData(
     db
       .collection('recipes')
       .where('userId', '==', user ? user.uid : '')
-      .orderBy('title', 'asc'),
+      .orderBy('updatedAt', 'desc'),
     { idField: 'id' }
   )
+  const [userData]: any = useDocumentData(db.collection('users').doc(user!.uid))
 
   useEffect(() => {
     if (values) {
-      // @ts-ignore
       setRecipes(values)
     }
-  }, [loading])
+  }, [values.length])
 
   const getRandomRecipeId = () => {
     if (values && values.length > 0) {
@@ -193,6 +197,15 @@ function Dashboard({ navigate }: Props) {
         >
           I want to eat!
         </CtaButton>
+
+        {userData && (
+          <RecipeQueue
+            recipes={userData.queuedRecipeIds.map((id: string) =>
+              recipes.find((item: any) => item.id === id)
+            )}
+          />
+        )}
+
         <AddButton onClick={() => navigate && navigate('create')}>
           <Icon style={{ backgroundImage: `url(${plus})` }} />
         </AddButton>
@@ -236,7 +249,21 @@ function Dashboard({ navigate }: Props) {
       </Top>
       <br />
 
-      <RecipeList recipes={recipes} />
+      {recipes && userData && recipes.length > 0 && (
+        <RecipeList
+          recipes={recipes.map((item: any) => {
+            if (!userData.queuedRecipeIds.includes(item.id)) {
+              return {
+                ...item,
+                onCtaClick: () => addRecipeToQueue(item.id),
+                ctaLabel: 'Add to queue',
+              }
+            }
+
+            return item
+          })}
+        />
+      )}
 
       <Router primary={false}>
         <CreateRecipe path="create" />

@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core'
 import DoneIcon from '@material-ui/icons/Done'
 import config from '../../firebaseConfig'
-import { createEntry } from '../../db'
+import { createRecipe } from '../../db'
 import { useSession } from '../../auth'
 import Modal from '../Modal/Modal'
 
@@ -75,7 +75,7 @@ function CreateRecipe({ onClose, navigate }: Props) {
         ingredients,
         image: images[activeImageIndex],
       }
-      createEntry(newRecipe)
+      createRecipe(newRecipe)
     }
   }
 
