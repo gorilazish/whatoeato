@@ -6,12 +6,11 @@ import { removeRecipeFromQueue } from '../../db'
 import RecipeCard from './RecipeCard'
 
 const QueueContainer = styled.div`
-  padding: 20px 20px;
+  padding: 20px 0;
   width: 100vw;
-  background: lightpink;
+  background: rgba(250, 135, 127, 0.49);
 
   @media (min-width: 640px) {
-    background: lightgrey;
     width: 50%;
   }
 `
@@ -44,7 +43,9 @@ const RecipeQueue = ({ recipes }: any) => {
 
   return (
     <QueueContainer>
-      <h2>My Queue</h2>
+      <div style={{ padding: '0 20px' }}>
+        <h2>My Queue</h2>
+      </div>
       <HorizontalSlider itemCount={recipes.length}>
         {recipes.map((item: any, index: number) => (
           <RecipeCard

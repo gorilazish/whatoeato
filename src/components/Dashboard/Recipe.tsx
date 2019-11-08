@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 import { deleteRecipe, db } from '../../db'
 
@@ -74,18 +75,16 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
       navigate('../')
     }
   }
-
   return (
-    <Modal isOpen={true} onDismiss={handleCloseRequest}>
-      <button onClick={() => navigate && navigate('../')}>CLOSE</button>
+    <Modal isOpen={!!recipe} onDismiss={handleCloseRequest}>
+      {/* <button onClick={() => navigate && navigate('../')}>CLOSE</button> */}
+
       {recipe && (
         <div>
           {recipe.image && (
             <CardMedia
               style={{
                 backgroundImage: `url(${recipe.image})`,
-                height: 0,
-                paddingTop: '25%',
               }}
             />
           )}
@@ -93,15 +92,18 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
           <Typography variant="h5" component="h2">
             {recipe.title}
           </Typography>
-          <List dense>
+
+          <ul>
             {recipe.ingredients &&
               recipe.ingredients.map((item: any) => (
-                <ListItem key={`${item.name}+${item.amount}`}>
-                  <ListItemText primary={item.name} secondary={item.amount} />
-                </ListItem>
+                <li>
+                  <span>
+                    {item.name} - {item.amount}
+                  </span>
+                </li>
               ))}
-          </List>
-          <List>
+          </ul>
+          <ul>
             {recipe.relatedLinks &&
               recipe.relatedLinks.length > 0 &&
               recipe.relatedLinks.slice(0, 3).map((item: any, index: any) => (
@@ -111,7 +113,7 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
                   </Typography>
                 </a>
               ))}
-          </List>
+          </ul>
           <Typography>{recipe.description}</Typography>
           <IconButton aria-label="delete" onClick={handleDeleteClick}>
             <DeleteIcon />
