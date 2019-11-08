@@ -201,7 +201,7 @@ function Dashboard({ navigate }: Props) {
           I want to eat!
         </CtaButton>
 
-        {userData && (
+        {userData && userData.queuedRecipeIds && (
           <RecipeQueue
             recipes={userData.queuedRecipeIds.map((id: string) =>
               values.find((item: any) => item.id === id)

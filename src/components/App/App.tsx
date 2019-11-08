@@ -55,8 +55,8 @@ function App(props: any) {
             style={{ width: '100%' }}
           >
             {user ? <Dashboard path="/*" /> : <Frontpage path="/*" />}
-            <Login path="/login" />
-            <Signup path="/signup" />
+            <Login path="login" />
+            <Signup path="signup" />
           </Router>
         </UserContext.Provider>
       </ContentWrapper>

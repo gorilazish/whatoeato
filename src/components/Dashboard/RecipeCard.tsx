@@ -54,7 +54,11 @@ export default function RecipeCard({
   ...rest
 }: Props) {
   const handleCardClick = (e: any) => {
-    navigate(id)
+    navigate(
+      `${
+        window.location.pathname === '/' ? '' : window.location.pathname
+      }/${id}`
+    )
   }
 
   const handleCtaClick = () => {

@@ -11,8 +11,8 @@ function Signup(props) {
 
   async function handleSignupClick() {
     try {
-      createUserWithEmail(name, email, password)
-      props.history.replace('/')
+      await createUserWithEmail(name, email, password)
+      props.navigate('../', { replace: true })
     } catch (error) {
       alert(error.message)
     }

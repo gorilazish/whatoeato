@@ -11,7 +11,7 @@ function Login(props) {
   async function handleLoginClick() {
     try {
       await loginWithEmail(email, password)
-      props.navigate('/', { replace: true })
+      props.navigate('../', { replace: true })
     } catch (error) {
       alert(error.message)
     }

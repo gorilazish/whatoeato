@@ -12,10 +12,10 @@ const Wrapper = styled.div`
 export default function Frontpage(props: any) {
   return (
     <Wrapper>
-      <Button type="submit" to="/login">
+      <Button type="submit" to="login">
         Login
       </Button>
-      <Button type="submit" to="/signup">
+      <Button type="submit" to="signup">
         Register
       </Button>
     </Wrapper>

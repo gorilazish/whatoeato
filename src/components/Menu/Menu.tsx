@@ -34,7 +34,9 @@ export default function Menu({ isOpen, ...rest }: any) {
     <StyledMenu
       style={{ transform: isOpen ? 'translateX(0)' : 'translateX(-100%)' }}
     >
-      <Button to="/">Home</Button>
+      <Button to={process.env.NODE_ENV === 'production' ? '/whatoeato' : '/'}>
+        Home
+      </Button>
       <hr />
       <Button type="submit" onClick={signOut}>
         Logout

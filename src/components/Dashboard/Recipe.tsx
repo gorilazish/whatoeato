@@ -95,8 +95,8 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
 
           <ul>
             {recipe.ingredients &&
-              recipe.ingredients.map((item: any) => (
-                <li>
+              recipe.ingredients.map((item: any, index: number) => (
+                <li key={index}>
                   <span>
                     {item.name} - {item.amount}
                   </span>
