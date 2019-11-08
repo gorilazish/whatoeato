@@ -1,27 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c67ea01b9a66b375ec57c4a23b4e14c9",
+    "revision": "e08c9574f6d40ab9dc819d39e4e77b31",
     "url": "/whatoeato/index.html"
   },
   {
-    "revision": "86c2c3cb6ebac497c91b",
-    "url": "/whatoeato/static/css/2.200132ab.chunk.css"
+    "revision": "9f2985fb9c7350ab3741",
+    "url": "/whatoeato/static/css/2.f9a9483b.chunk.css"
   },
   {
-    "revision": "60600939316f2d2103d8",
-    "url": "/whatoeato/static/css/main.f1bdf882.chunk.css"
+    "revision": "0b3cb703e62fd9975dc4",
+    "url": "/whatoeato/static/css/main.27c72d91.chunk.css"
   },
   {
-    "revision": "86c2c3cb6ebac497c91b",
-    "url": "/whatoeato/static/js/2.801632ae.chunk.js"
+    "revision": "9f2985fb9c7350ab3741",
+    "url": "/whatoeato/static/js/2.807f3879.chunk.js"
   },
   {
-    "revision": "60600939316f2d2103d8",
-    "url": "/whatoeato/static/js/main.b1dfeba3.chunk.js"
+    "revision": "0b3cb703e62fd9975dc4",
+    "url": "/whatoeato/static/js/main.29e7ecf7.chunk.js"
   },
   {
     "revision": "2f3b140c2b2a2072f8a3",
     "url": "/whatoeato/static/js/runtime-main.10b97b2a.js"
+  },
+  {
+    "revision": "86d14ad8fcdcd57a60db73f08bf7decd",
+    "url": "/whatoeato/static/media/food-placeholder.86d14ad8.png"
   },
   {
     "revision": "5cb7edfceb233100075dc9a1e12e8da3",
