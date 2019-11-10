@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { DialogOverlay, DialogContent } from '@reach/dialog'
 

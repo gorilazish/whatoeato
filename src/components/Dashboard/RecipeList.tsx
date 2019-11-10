@@ -6,11 +6,12 @@ import RecipeCard from './RecipeCard'
 const GridList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: repeat(1, minmax(75px, auto));
   grid-gap: 15px;
 
   @media (min-width: 640px) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 35px;
+    grid-gap: 25px;
   }
 `
 

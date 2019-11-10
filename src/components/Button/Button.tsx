@@ -17,14 +17,25 @@ const StyledButton = styled.button`
 
 const StyledLink = StyledButton.withComponent(Link)
 
-const Button = ({ children, to, ...rest }: Props) => {
+const Button = ({ children, to, onClick, ...rest }: Props) => {
   if (to)
     return (
       <StyledLink to={to} {...rest}>
         {children}
       </StyledLink>
     )
-  return <StyledButton {...rest}>{children}</StyledButton>
+
+  const handleClick = (e: any) => {
+    e.stopPropagation()
+    if (onClick) {
+      onClick(e)
+    }
+  }
+  return (
+    <StyledButton onClick={handleClick} {...rest}>
+      {children}
+    </StyledButton>
+  )
 }
 
 export default Button

@@ -1,9 +1,13 @@
+/** @jsx jsx */
 import React from 'react'
 import styled from '@emotion/styled'
 import { navigate } from '@reach/router'
+import { jsx, css } from '@emotion/core'
 
 import { RecipeType } from './Recipe'
 import Button from '../Button/Button'
+
+import plus from './plus.png'
 
 type Props = RecipeType & {
   style?: object
@@ -11,7 +15,8 @@ type Props = RecipeType & {
   ctaLabel?: string
 }
 
-const MyCard = styled.div`
+const Container = styled.div`
+  height: 100%;
   @media (min-width: 640px) {
     max-width: 345px;
   }
@@ -19,29 +24,66 @@ const MyCard = styled.div`
 
 const ContentWrapper = styled.div`
   display: grid;
-`
+  grid-template-rows: 75% 25%;
+  height: 100%;
+  margin: 5px;
+  cursor: pointer;
 
-const CardContent = styled.div`
-  width: 75%;
-  margin: 0 auto;
-  background-color: #fff9f9;
-  margin-top: -40px;
-  padding: 10px 15px;
-  text-align: center;
-
-  :hover {
-    box-shadow: 0 0.5em 0.5em -0.4em rgba(33, 33, 33, 0.2);
-    transform: translateY(-0.25em);
+  :hover > div {
+    box-shadow: 0 0.5em 0.5em -0.2em rgba(33, 33, 33, 0.2);
   }
 `
 
+const CardContent = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  background-color: #fff9f9;
+  padding: 10px 15px;
+  text-align: center;
+  margin-top: -5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 1;
+  border-radius: 10px;
+
+  box-shadow: 0 0.5em 0.5em -0.4em rgba(33, 33, 33, 0.2);
+`
+
 const CardMedia = styled.div`
+  position: relative;
   height: 100%;
-  padding-top: 75%;
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  padding-top: 50%;
+`
+
+const AddButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: none;
+  opacity: 0.8;
+  padding: 5px;
+
+  @media (min-width: 640px) {
+    opacity: 0.8;
+    transition: all 0.1s ease-in-out;
+
+    :hover {
+      opacity: 1;
+    }
+  }
+`
+
+const Icon = styled.div`
+  background-position: center;
+  background-size: cover;
+  background-image: ${({ src }: any) => `url(${src})`};
+  height: 30px;
+  width: 30px;
 `
 
 export default function RecipeCard({
@@ -68,17 +110,36 @@ export default function RecipeCard({
   }
 
   return (
-    <MyCard {...rest}>
-      <ContentWrapper>
-        <div>
-          {image && <CardMedia style={{ backgroundImage: `url(${image})` }} />}
+    <Container {...rest}>
+      <ContentWrapper onClick={handleCardClick}>
+        <div
+          css={css`
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0.5em 0.5em -0.4em rgba(33, 33, 33, 0.2);
+          `}
+        >
+          {image && (
+            <CardMedia style={{ backgroundImage: `url(${image})` }}>
+              {onCtaClick && (
+                <AddButton
+                  css={css`
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                  `}
+                  onClick={handleCtaClick}
+                >
+                  <Icon style={{ backgroundImage: `url(${plus})` }} />
+                </AddButton>
+              )}
+            </CardMedia>
+          )}
         </div>
-        <CardContent onClick={handleCardClick}>
+        <CardContent>
           <h2 style={{ fontSize: '18px' }}>{title}</h2>
-          <p>{ingredients && ingredients.map(item => item.name).join(' | ')}</p>
         </CardContent>
-        {onCtaClick && <Button onClick={handleCtaClick}>{ctaLabel}</Button>}
       </ContentWrapper>
-    </MyCard>
+    </Container>
   )
 }

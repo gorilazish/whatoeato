@@ -7,7 +7,7 @@ import {
 import styled from '@emotion/styled'
 
 import { useSession } from '../../auth'
-import { db, addRecipeToQueue } from '../../db'
+import { db, addRecipeToQueue, removeRecipeFromQueue } from '../../db'
 
 import RecipeList from './RecipeList'
 import RecipeQueue from './RecipeQueue'
@@ -255,17 +255,12 @@ function Dashboard({ navigate }: Props) {
       )}
       {recipes && userData && recipes.length > 0 && (
         <RecipeList
-          recipes={recipes.map((item: any) => {
-            if (!userData.queuedRecipeIds.includes(item.id)) {
-              return {
-                ...item,
-                onCtaClick: () => addRecipeToQueue(item.id),
-                ctaLabel: 'Add to queue',
-              }
-            }
-
-            return item
-          })}
+          recipes={recipes.map((item: any) => ({
+            ...item,
+            onCtaClick: userData.queuedRecipeIds.includes(item.id)
+              ? () => removeRecipeFromQueue(item.id)
+              : () => addRecipeToQueue(item.id),
+          }))}
         />
       )}
 
