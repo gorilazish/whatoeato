@@ -7,6 +7,7 @@ type Props = {
   fields: string[]
   onResult: Function
   placeholder?: string
+  style?: any
 }
 
 const StyledInput = styled.input`

@@ -201,13 +201,15 @@ function Dashboard({ navigate }: Props) {
           I want to eat!
         </CtaButton>
 
-        {userData && userData.queuedRecipeIds && (
-          <RecipeQueue
-            recipes={userData.queuedRecipeIds.map((id: string) =>
+        <RecipeQueue
+          recipes={
+            userData &&
+            userData.queuedRecipeIds &&
+            userData.queuedRecipeIds.map((id: string) =>
               values.find((item: any) => item.id === id)
-            )}
-          />
-        )}
+            )
+          }
+        />
 
         <AddButton onClick={() => navigate && navigate('create')}>
           <Icon style={{ backgroundImage: `url(${plus})` }} />
@@ -221,7 +223,6 @@ function Dashboard({ navigate }: Props) {
           }}
         >
           {values && (
-            // @ts-ignore
             <Search
               style={{
                 transition: 'all 0.25s ease-in-out',

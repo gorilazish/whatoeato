@@ -7,7 +7,7 @@ const GridList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(1, minmax(75px, auto));
-  grid-gap: 15px;
+  grid-gap: 25px;
 
   @media (min-width: 640px) {
     grid-template-columns: 1fr 1fr 1fr;

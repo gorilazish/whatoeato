@@ -35,8 +35,6 @@ const HorizontalSlider = styled.div<StyledSliderProps>`
 `
 
 const RecipeQueue = ({ recipes }: any) => {
-  if (!recipes || recipes.length < 1) return null
-
   const handleRemoveClick = (id: string) => {
     removeRecipeFromQueue(id)
   }
@@ -46,19 +44,26 @@ const RecipeQueue = ({ recipes }: any) => {
       <div style={{ padding: '0 20px' }}>
         <h2>My Queue</h2>
       </div>
-      <HorizontalSlider itemCount={recipes.length}>
-        {recipes.map((item: any, index: number) => (
-          <RecipeCard
-            key={index}
-            onCtaClick={handleRemoveClick}
-            ctaLabel="Remove from queue"
-            style={{
-              scrollSnapAlign: 'center',
-            }}
-            {...item}
-          />
-        ))}
-      </HorizontalSlider>
+      {recipes && recipes.length > 0 ? (
+        <HorizontalSlider itemCount={recipes.length}>
+          {recipes.map((item: any, index: number) => (
+            <RecipeCard
+              key={index}
+              onCtaClick={handleRemoveClick}
+              ctaLabel="Remove from queue"
+              style={{
+                scrollSnapAlign: 'center',
+              }}
+              {...item}
+            />
+          ))}
+        </HorizontalSlider>
+      ) : (
+        <div>
+          <h3>Your queue is empty</h3>
+          <p>Add items to queue from your recipe list</p>
+        </div>
+      )}
     </QueueContainer>
   )
 }
