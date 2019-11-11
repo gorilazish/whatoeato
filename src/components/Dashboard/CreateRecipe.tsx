@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 // @ts-ignore
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
 import {
   FormControl,
   Input,
@@ -18,7 +17,6 @@ import Modal from '../Modal/Modal'
 
 import imgPlaceholder from './food-placeholder.png'
 import Button from '../Button/Button'
-import { whileStatement } from '@babel/types'
 
 type Props = RouteComponentProps & {
   onClose?: () => void
@@ -85,6 +83,7 @@ const ReturnButton = styled(Button)`
 
 function CreateRecipe({ onClose, navigate }: Props) {
   const user = useSession()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [title, setTitle] = useState('')
   const [images, setImages] = useState([])
   const [activeImageIndex, setActiveImageIndex] = useState(0)
@@ -114,8 +113,9 @@ function CreateRecipe({ onClose, navigate }: Props) {
     }
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     if (user) {
+      setIsSubmitting(true)
       const newRecipe = {
         title,
         userId: user.uid,
@@ -125,7 +125,9 @@ function CreateRecipe({ onClose, navigate }: Props) {
         ingredients,
         image: images[activeImageIndex],
       }
-      createRecipe(newRecipe)
+      await createRecipe(newRecipe)
+      handleCloseRequest()
+      setIsSubmitting(false)
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { DialogOverlay, DialogContent } from '@reach/dialog'
 
@@ -18,7 +18,7 @@ const MobileContentSpacer = styled.div`
 
   @media (max-width: 640px) {
     display: block;
-    height: 45vh;
+    height: 40vh;
     width: 100vw;
     background: transparent;
   }

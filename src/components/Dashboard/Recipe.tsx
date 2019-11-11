@@ -1,17 +1,17 @@
+/** @jsx jsx */
+/** @jsx jsx */
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
+import { useInView } from 'react-intersection-observer'
+import { jsx, css } from '@emotion/core'
 
 import { deleteRecipe, db } from '../../db'
 
 import { Ingredient } from '../../db'
 
 import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Modal from '../Modal/Modal'
@@ -46,7 +46,16 @@ const CardMedia = styled.div`
   background-position: center;
 `
 
+const Title = styled.h1`
+  width: 100%;
+  text-align: center;
+  color: white;
+`
+
 const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
+  const [ref, inView] = useInView({
+    threshold: 0.95,
+  })
   const [value, loading, error] = useDocumentDataOnce(db.doc(`recipes/${id}`))
   const [recipe, setRecipe] = useState()
   useEffect(() => {
@@ -80,29 +89,63 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
       {/* <button onClick={() => navigate && navigate('../')}>CLOSE</button> */}
 
       {recipe && (
-        <div>
-          {recipe.image && (
-            <CardMedia
-              style={{
-                backgroundImage: `url(${recipe.image})`,
-              }}
-            />
-          )}
+        <div ref={ref}>
+          <div
+            css={css`
+              color: white;
+              position: relative;
+            `}
+          >
+            {recipe.image && (
+              <CardMedia
+                css={css`
+                  background-image: url(${recipe.image});
+                  transition: filter 0.45s ease-in-out;
+                  filter: ${inView
+                    ? 'brightness(50%) blur(1px)'
+                    : 'brightness(100%)'};
+                `}
+              />
+            )}
+            <div
+              css={css`
+                color: white;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+                transition: opacity 0.15s ease 0.1s;
+                opacity: ${inView ? 1 : 0};
+              `}
+            >
+              <Title>{recipe.title}</Title>
+              <div
+                css={css`
+                  border: 2px solid white;
+                  padding: 15px 25px;
+                  text-align: left;
 
-          <Typography variant="h5" component="h2">
-            {recipe.title}
-          </Typography>
+                  p {
+                    margin: 0;
+                    font-weight: bold;
+                  }
+                `}
+              >
+                {recipe.ingredients &&
+                  recipe.ingredients.map((item: any, index: number) => (
+                    <p key={index}>
+                      {item.name} - {item.amount}
+                    </p>
+                  ))}
+              </div>
+            </div>
+          </div>
 
-          <ul>
-            {recipe.ingredients &&
-              recipe.ingredients.map((item: any, index: number) => (
-                <li key={index}>
-                  <span>
-                    {item.name} - {item.amount}
-                  </span>
-                </li>
-              ))}
-          </ul>
           <ul>
             {recipe.relatedLinks &&
               recipe.relatedLinks.length > 0 &&
