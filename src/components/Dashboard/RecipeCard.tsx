@@ -5,9 +5,8 @@ import { navigate } from '@reach/router'
 import { jsx, css } from '@emotion/core'
 
 import { RecipeType } from './Recipe'
-import Button from '../Button/Button'
 
-import plus from './plus.png'
+import AddButton from '../Button/AddButton'
 
 type Props = RecipeType & {
   style?: object
@@ -15,12 +14,7 @@ type Props = RecipeType & {
   ctaLabel?: string
 }
 
-const Container = styled.div`
-  height: 100%;
-  @media (min-width: 640px) {
-    max-width: 345px;
-  }
-`
+const Container = styled.div``
 
 const ContentWrapper = styled.div`
   display: grid;
@@ -59,25 +53,6 @@ const CardMedia = styled.div`
   padding-top: 50%;
 `
 
-const AddButton = styled(Button)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50px;
-  border: none;
-  opacity: 0.8;
-  padding: 5px;
-
-  @media (min-width: 640px) {
-    opacity: 0.8;
-    transition: all 0.1s ease-in-out;
-
-    :hover {
-      opacity: 1;
-    }
-  }
-`
-
 const Icon = styled.div`
   background-position: center;
   background-size: cover;
@@ -99,7 +74,7 @@ export default function RecipeCard({
     navigate(
       `${
         window.location.pathname === '/' ? '' : window.location.pathname
-      }/${id}`
+      }/${id}`,
     )
   }
 
@@ -129,15 +104,13 @@ export default function RecipeCard({
                     right: 5px;
                   `}
                   onClick={handleCtaClick}
-                >
-                  <Icon style={{ backgroundImage: `url(${plus})` }} />
-                </AddButton>
+                />
               )}
             </CardMedia>
           )}
         </div>
         <CardContent>
-          <h2 style={{ fontSize: '18px' }}>{title}</h2>
+          <h2 style={{ fontSize: '18px', margin: '0' }}>{title}</h2>
         </CardContent>
       </ContentWrapper>
     </Container>

@@ -32,8 +32,8 @@ const StyledDialogContent = styled(DialogContent)`
   background: white;
 
   @media (min-width: 640px) {
-    height: 70vh;
-    width: 60vh;
+    min-height: auto;
+    width: 80vw;
     margin: 10vh auto;
   }
 `

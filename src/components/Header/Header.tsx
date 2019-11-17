@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import { navigate } from '@reach/router'
 
 import Burger from '../Button/Burger'
 import Menu from '../Menu/Menu'
+import AddButton from '../Button/AddButton'
 
 const Container = styled.nav`
   position: fixed;
-  top: 0;
+  bottom: 0;
   width: 100%;
   background: white;
   z-index: 10;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.75);
 `
 const ContentWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr auto 1fr;
   margin: 0 auto;
   padding: 10px;
 `
@@ -37,7 +40,11 @@ export default function Header({ user }: any) {
           />
         </Utils>
 
-        {user && <div></div>}
+        {user && (
+          <div>
+            <AddButton onClick={() => navigate('create')} />
+          </div>
+        )}
         {user && <Utils></Utils>}
       </ContentWrapper>
       <Menu isOpen={isMenuOpen} />

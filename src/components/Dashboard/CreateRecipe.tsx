@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@material-ui/core'
 import config from '../../firebaseConfig'
-import { createRecipe } from '../../db'
+import { createRecipe, extractImageSrcFromLink } from '../../db'
 import { useSession } from '../../auth'
 import Modal from '../Modal/Modal'
 
@@ -50,6 +50,10 @@ const CardMedia = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  @media (min-width: 640px) {
+    padding-top: 40%;
+  }
 `
 
 const SliderControl = styled.div`
@@ -150,7 +154,7 @@ function CreateRecipe({ onClose, navigate }: Props) {
 
   const removeIngredient = (ingredient: Ingredient) => {
     const updatedIngredients = [...ingredients].filter(
-      item => item.name !== ingredient.name
+      item => item.name !== ingredient.name,
     )
 
     setIngredients(updatedIngredients)
@@ -179,20 +183,8 @@ function CreateRecipe({ onClose, navigate }: Props) {
     if (relatedGoogleRecipes.items && relatedGoogleRecipes.items.length > 0) {
       const relatedLinks = relatedGoogleRecipes.items
       const recipeImages: string[] = []
-      // @ts-ignore
-      relatedLinks.forEach(item => {
-        let image
-        if (item.pagemap) {
-          if (item.pagemap.cse_thumbnail) {
-            image = item.pagemap.cse_thumbnail[0].src
-          }
-          if (item.pagemap.cse_image) {
-            image = item.pagemap.cse_image[0].src
-          }
-          if (item.pagemap.image) {
-            image = item.pagemap.image[0].src
-          }
-        }
+      relatedLinks.forEach((item: any) => {
+        const image = extractImageSrcFromLink(item)
 
         if (image) {
           recipeImages.push(image)
@@ -233,7 +225,7 @@ function CreateRecipe({ onClose, navigate }: Props) {
                   setActiveImageIndex(
                     activeImageIndex === 0
                       ? images.length - 1
-                      : activeImageIndex - 1
+                      : activeImageIndex - 1,
                   )
                 }
               >
@@ -249,7 +241,7 @@ function CreateRecipe({ onClose, navigate }: Props) {
                   setActiveImageIndex(
                     activeImageIndex === images.length - 1
                       ? 0
-                      : activeImageIndex + 1
+                      : activeImageIndex + 1,
                   )
                 }
               >

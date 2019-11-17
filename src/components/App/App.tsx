@@ -16,20 +16,23 @@ import Frontpage from '../Frontpage/Frontpage'
 
 const Container = styled.main`
   width: auto;
-  margin: 0 5px;
+  padding: 0 10px;
 
   @media (min-width: 420px) {
-    width: 95vw;
+    max-width: 1440px;
     margin: 0 auto;
   }
 `
 
 const ContentWrapper = styled.div`
-  margin-top: 52px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 30px;
+  padding: 0;
+
+  @media (min-width: 640px) {
+    padding-bottom: 20px;
+  }
 `
 
 function App(props: any) {

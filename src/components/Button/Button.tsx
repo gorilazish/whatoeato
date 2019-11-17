@@ -7,7 +7,7 @@ type Props = any
 const StyledButton = styled.button`
   padding: 10px 20px;
   background: coral;
-  border: 2px solid black;
+  border: none;
   text-align: center;
   text-decoration: none;
   color: black;

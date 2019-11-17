@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from '@emotion/styled'
 import * as JsSearch from 'js-search'
 
@@ -18,6 +18,7 @@ const StyledInput = styled.input`
 `
 
 const Search = ({ items, fields, onResult, ...rest }: Props) => {
+  const inputEl = useRef(null)
   const [search, setSearchInstance] = useState()
 
   useEffect(() => {
@@ -48,10 +49,20 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
 
   return (
     <StyledInput
+      ref={inputEl}
       onClick={e => e.stopPropagation()}
       type="text"
       placeholder="search"
       onChange={handleSearchQueryChange}
+      onFocus={e => {
+        if (inputEl.current) {
+          const el: any = inputEl.current
+          window.scroll({
+            top: el.offsetTop,
+            behavior: 'smooth'
+          })
+        }
+      }}
       {...rest}
     />
   )

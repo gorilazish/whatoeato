@@ -1,18 +1,15 @@
+/** @jsx jsx */
 import React from 'react'
 import styled from '@emotion/styled'
+import { jsx, css } from '@emotion/core'
 
 import { removeRecipeFromQueue } from '../../db'
 
 import RecipeCard from './RecipeCard'
 
 const QueueContainer = styled.div`
-  padding: 20px 0;
   width: 100vw;
   background: rgba(250, 135, 127, 0.49);
-
-  @media (min-width: 640px) {
-    width: 50%;
-  }
 `
 type StyledSliderProps = {
   itemCount: number
@@ -26,11 +23,16 @@ const HorizontalSlider = styled.div<StyledSliderProps>`
   padding-bottom: calc(0.75 * var(--gutter));
   margin-bottom: calc(-0.25 * var(--gutter));
 
-  grid-template-columns: ${({ itemCount }: any) => `repeat(${itemCount}, 60%)`};
+  grid-template-columns: ${({ itemCount }: any) => `repeat(${itemCount}, 75%)`};
 
   @media (min-width: 640px) {
     grid-template-columns: ${({ itemCount }: any) =>
-      `repeat(${itemCount}, 30%)`};
+      `repeat(${itemCount}, 35%)`};
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: ${({ itemCount }: any) =>
+      `repeat(${itemCount}, 20%)`};
   }
 `
 
@@ -39,12 +41,26 @@ const RecipeQueue = ({ recipes }: any) => {
     removeRecipeFromQueue(id)
   }
 
+  const isEmpty = !recipes || !recipes.length
+
   return (
-    <QueueContainer>
-      <div style={{ padding: '0 20px' }}>
-        <h2>My Queue</h2>
+    <QueueContainer
+      css={css`
+        transition: all 0.35s ease;
+        padding: ${isEmpty ? '10px 0' : '20px 0'};
+        ${isEmpty && 'background: rgba(250, 135, 127, 0.20);'}
+      `}
+    >
+      <div>
+        <h2
+          css={css`
+            padding: 0 10px;
+            transition: all 0.35s ease;
+            font-size: ${isEmpty ? '1rem' : '1.5rem'};
+          `}
+        >{`My Queue${isEmpty ? ' is empty' : ''}`}</h2>
       </div>
-      {recipes && recipes.length > 0 ? (
+      {recipes && recipes.length > 0 && (
         <HorizontalSlider itemCount={recipes.length}>
           {recipes.map((item: any, index: number) => (
             <RecipeCard
@@ -53,16 +69,12 @@ const RecipeQueue = ({ recipes }: any) => {
               ctaLabel="Remove from queue"
               style={{
                 scrollSnapAlign: 'center',
+                padding: '5px',
               }}
               {...item}
             />
           ))}
         </HorizontalSlider>
-      ) : (
-        <div>
-          <h3>Your queue is empty</h3>
-          <p>Add items to queue from your recipe list</p>
-        </div>
       )}
     </QueueContainer>
   )

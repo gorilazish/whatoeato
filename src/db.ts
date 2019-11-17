@@ -76,3 +76,24 @@ export const removeRecipeFromQueue = async (recipeId: string) => {
     })
   }
 }
+
+export const extractImageSrcFromLink = (item: any) => {
+  let image
+  if (item.pagemap) {
+    if (item.pagemap.cse_thumbnail) {
+      image = item.pagemap.cse_thumbnail[0].src
+    }
+    if (item.pagemap.cse_image) {
+      image = item.pagemap.cse_image[0].src
+    }
+    if (item.pagemap.image) {
+      image = item.pagemap.image[0].src
+    }
+  }
+
+  if (image) {
+    return image
+  }
+
+  return undefined
+}
