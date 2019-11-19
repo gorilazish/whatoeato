@@ -18,16 +18,15 @@ const StyledButton = styled(Button)`
   justify-content: center;
   border-radius: 50px;
   border: none;
-  opacity: 0.8;
   padding: 5px;
   cursor: pointer;
 
   @media (min-width: 640px) {
-    opacity: 0.8;
-    transition: all 0.1s ease-in-out;
+    background-color: rgba(255, 127, 80, 0.8);
+    transition: background-color 0.1s ease-in-out;
 
     :hover {
-      opacity: 1;
+      background-color: rgba(255, 127, 80, 1);
     }
   }
 `

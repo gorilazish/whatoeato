@@ -34,7 +34,7 @@ const CardContent = styled.div`
   background-color: #fff9f9;
   padding: 10px 15px;
   text-align: center;
-  margin-top: -5px;
+  margin-top: -8px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   z-index: 1;
@@ -115,7 +115,9 @@ export default function RecipeCard({
           )}
         </div>
         <CardContent>
-          <h2 style={{ fontSize: '18px', margin: '0' }}>{title}</h2>
+          <h2 style={{ fontSize: '1.1rem', margin: '0', fontWeight: 'normal' }}>
+            {title}
+          </h2>
         </CardContent>
       </ContentWrapper>
     </Container>

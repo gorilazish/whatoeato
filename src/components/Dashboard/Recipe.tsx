@@ -85,7 +85,8 @@ const BottomCtaButton = styled(Button)`
   bottom: 0;
   left: 0;
   width: 50%;
-  height: 70px;
+  height: 60px;
+  z-index: 1;
 `
 
 const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
@@ -184,7 +185,6 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
             <div
               css={css`
                 display: grid;
-                grid-template-rows: 100px;
                 grid-gap: 10px;
               `}
             >
