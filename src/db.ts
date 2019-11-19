@@ -55,6 +55,20 @@ export const deleteRecipe = (id: string) => {
     .delete()
 }
 
+export const updateRecipe = (id: string, options: RecipeOptions) => {
+  log('update recipe: %o', options)
+  return db
+    .collection('recipes')
+    .doc(id)
+    .set(
+      {
+        ...options,
+        updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
+      },
+      { merge: true },
+    )
+}
+
 export const addRecipeToQueue = async (recipeId: string) => {
   const user = getCurrentUser()
 

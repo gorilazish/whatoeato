@@ -11,6 +11,7 @@ import { Ingredient } from '../../db'
 
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 import Modal from '../Modal/Modal'
 
 import '@reach/dialog/styles.css'
@@ -92,8 +93,17 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
 
   if (!loading && error) return <h1>{String(error)}</h1>
 
-  const handleDeleteClick = () => {
-    deleteRecipe(id!)
+  const handleDeleteClick = async () => {
+    await deleteRecipe(id!)
+    if (navigate) {
+      navigate('../', { replace: true })
+    }
+  }
+
+  const handleEditClick = () => {
+    if (navigate) {
+      navigate('edit', { replace: true })
+    }
   }
 
   const handleCloseRequest = () => {
@@ -138,7 +148,7 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
                 css={css`
                   background-image: url(${value.image});
                   transition: filter 0.45s ease-in-out;
-                  filter: brightness(60%) blur(1px);
+                  filter: brightness(60%);
                 `}
               />
             )}
@@ -214,6 +224,9 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
                 padding: 20px;
               `}
             >
+              <IconButton aria-label="delete" onClick={handleEditClick}>
+                <EditIcon />
+              </IconButton>
               <IconButton aria-label="delete" onClick={handleDeleteClick}>
                 <DeleteIcon />
               </IconButton>

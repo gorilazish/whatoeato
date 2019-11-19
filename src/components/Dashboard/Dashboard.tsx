@@ -83,6 +83,7 @@ const StyledSearch = styled(Search)`
   }
 
   :focus {
+    text-align: left;
     outline: none;
     width: 100%;
     animation: hoverEffect 0.25s;
@@ -192,6 +193,7 @@ function Dashboard({ navigate }: Props) {
 
       <Router primary={false}>
         <CreateRecipe path="create" />
+        <CreateRecipe path=":id/edit" />
         <Recipe
           path=":id"
           onClose={() => {

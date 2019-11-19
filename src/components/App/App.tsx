@@ -28,11 +28,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0;
-
-  @media (min-width: 640px) {
-    padding-bottom: 20px;
-  }
+  padding-bottom: 100px;
 `
 
 function App(props: any) {

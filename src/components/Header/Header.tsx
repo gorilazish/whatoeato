@@ -10,7 +10,7 @@ const Container = styled.nav`
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: white;
+  background: rgba(255, 255, 255, 0.8);
   z-index: 10;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.75);
 `

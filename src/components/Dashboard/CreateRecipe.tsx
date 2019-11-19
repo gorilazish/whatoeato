@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 // @ts-ignore
 import styled from '@emotion/styled'
 import {
@@ -10,8 +11,9 @@ import {
   Typography,
   TextField,
 } from '@material-ui/core'
+import { db } from '../../db'
 import config from '../../firebaseConfig'
-import { createRecipe, extractImageSrcFromLink } from '../../db'
+import { createRecipe, updateRecipe, extractImageSrcFromLink } from '../../db'
 import { useSession } from '../../auth'
 import Modal from '../Modal/Modal'
 
@@ -20,6 +22,7 @@ import Button from '../Button/Button'
 
 type Props = RouteComponentProps & {
   onClose?: () => void
+  id?: string
 }
 
 export interface Ingredient {
@@ -85,7 +88,11 @@ const ReturnButton = styled(Button)`
   }
 `
 
-function CreateRecipe({ onClose, navigate }: Props) {
+function CreateRecipe({ onClose, navigate, id }: Props) {
+  const [value, loading, error] = useDocumentDataOnce(
+    id ? db.doc(`recipes/${id}`) : null,
+  )
+
   const user = useSession()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [title, setTitle] = useState('')
@@ -103,12 +110,27 @@ function CreateRecipe({ onClose, navigate }: Props) {
   const [recipeLink, setRecipeLink] = useState('')
 
   useEffect(() => {
-    window.addEventListener('keydown', handleUserKeyPress)
+    if (id && value) {
+      setPrefilledState()
+    }
+  }, [loading])
 
+  useEffect(() => {
+    window.addEventListener('keydown', handleUserKeyPress)
     return () => {
       window.removeEventListener('keydown', handleUserKeyPress)
     }
   })
+
+  const setPrefilledState = () => {
+    if (value) {
+      setTitle(value.title)
+      setDescription(value.description)
+      setIngredients(value.ingredients)
+      // @ts-ignore
+      setImages([value.image])
+    }
+  }
 
   const handleUserKeyPress = (e: any) => {
     const { keyCode } = e
@@ -129,7 +151,13 @@ function CreateRecipe({ onClose, navigate }: Props) {
         ingredients,
         image: images[activeImageIndex],
       }
-      await createRecipe(newRecipe)
+
+      if (id) {
+        await updateRecipe(id, newRecipe)
+      } else {
+        await createRecipe(newRecipe)
+      }
+
       handleCloseRequest()
       setIsSubmitting(false)
     }
@@ -335,7 +363,7 @@ function CreateRecipe({ onClose, navigate }: Props) {
             color="secondary"
             onClick={handleSubmit}
           >
-            Add
+            {id ? 'Save' : 'Add'}
           </Button>
         </Container>
       </form>
