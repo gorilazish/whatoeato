@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/whatoeato/static/css/main.27c72d91.chunk.css",
-    "main.js": "/whatoeato/static/js/main.7b4c66a4.chunk.js",
-    "main.js.map": "/whatoeato/static/js/main.7b4c66a4.chunk.js.map",
+    "main.js": "/whatoeato/static/js/main.ddd95469.chunk.js",
+    "main.js.map": "/whatoeato/static/js/main.ddd95469.chunk.js.map",
     "runtime-main.js": "/whatoeato/static/js/runtime-main.3fb3475b.js",
     "runtime-main.js.map": "/whatoeato/static/js/runtime-main.3fb3475b.js.map",
     "static/css/2.200132ab.chunk.css": "/whatoeato/static/css/2.200132ab.chunk.css",
-    "static/js/2.fc9ba55d.chunk.js": "/whatoeato/static/js/2.fc9ba55d.chunk.js",
-    "static/js/2.fc9ba55d.chunk.js.map": "/whatoeato/static/js/2.fc9ba55d.chunk.js.map",
+    "static/js/2.f93892bb.chunk.js": "/whatoeato/static/js/2.f93892bb.chunk.js",
+    "static/js/2.f93892bb.chunk.js.map": "/whatoeato/static/js/2.f93892bb.chunk.js.map",
     "index.html": "/whatoeato/index.html",
-    "precache-manifest.a4242c82f5b717165419b0b8b92f2f6b.js": "/whatoeato/precache-manifest.a4242c82f5b717165419b0b8b92f2f6b.js",
+    "precache-manifest.6bff0e62e991ffd1fc84ff3c822a8cc1.js": "/whatoeato/precache-manifest.6bff0e62e991ffd1fc84ff3c822a8cc1.js",
     "service-worker.js": "/whatoeato/service-worker.js",
     "static/css/2.200132ab.chunk.css.map": "/whatoeato/static/css/2.200132ab.chunk.css.map",
     "static/css/main.27c72d91.chunk.css.map": "/whatoeato/static/css/main.27c72d91.chunk.css.map",
@@ -19,8 +19,8 @@
   "entrypoints": [
     "static/js/runtime-main.3fb3475b.js",
     "static/css/2.200132ab.chunk.css",
-    "static/js/2.fc9ba55d.chunk.js",
+    "static/js/2.f93892bb.chunk.js",
     "static/css/main.27c72d91.chunk.css",
-    "static/js/main.7b4c66a4.chunk.js"
+    "static/js/main.ddd95469.chunk.js"
   ]
 }
