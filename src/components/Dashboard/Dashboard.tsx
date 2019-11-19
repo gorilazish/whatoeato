@@ -66,7 +66,6 @@ const StyledSearch = styled(Search)`
   background-color: white;
   color: black;
   margin: 30px auto 30px;
-  padding: 25px 15px;
   font-size: 1.5rem;
   text-align: center;
   cursor: pointer;

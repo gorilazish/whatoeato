@@ -71,11 +71,16 @@ export default function RecipeCard({
   ...rest
 }: Props) {
   const handleCardClick = (e: any) => {
-    navigate(
-      `${
-        window.location.pathname === '/' ? '' : window.location.pathname
-      }/${id}`,
-    )
+    const path = `${
+      window.location.pathname.replace('/', '') === ''
+        ? ''
+        : window.location.pathname
+    }${
+      window.location.pathname[window.location.pathname.length - 1] !== '/'
+        ? '/'
+        : ''
+    }${id}`
+    navigate(path)
   }
 
   const handleCtaClick = () => {

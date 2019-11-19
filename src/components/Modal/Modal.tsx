@@ -42,7 +42,11 @@ const Modal = ({ children, isOpen, onDismiss, style }: any) => {
   return (
     <StyledDialogOverlay isOpen={isOpen} onDismiss={onDismiss}>
       <MobileContentSpacer />
-      <StyledDialogContent style={style}>{children}</StyledDialogContent>
+      {/* Fake button used to force @reach dialog to focus */}
+      <button style={{ visibility: 'collapse' }}>FAKE BUTTON</button>
+      <StyledDialogContent aria-label="modal" style={style}>
+        {children}
+      </StyledDialogContent>
     </StyledDialogOverlay>
   )
 }

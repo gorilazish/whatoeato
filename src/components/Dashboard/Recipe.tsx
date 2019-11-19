@@ -9,7 +9,6 @@ import { deleteRecipe, db, extractImageSrcFromLink } from '../../db'
 
 import { Ingredient } from '../../db'
 
-import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Modal from '../Modal/Modal'
@@ -90,18 +89,6 @@ const BottomCtaButton = styled(Button)`
 
 const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
   const [value, loading, error] = useDocumentDataOnce(db.doc(`recipes/${id}`))
-  const [recipe, setRecipe] = useState()
-  useEffect(() => {
-    if (!!value) {
-      setRecipe({
-        image: value.image,
-        title: value.title,
-        description: value.description,
-        ingredients: value.ingredients,
-        relatedLinks: value.relatedLinks,
-      } as RecipeType)
-    }
-  }, [loading])
 
   if (!loading && error) return <h1>{String(error)}</h1>
 
@@ -120,13 +107,12 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
 
   return (
     <Modal
-      isOpen={!!recipe}
+      isOpen={true}
       onDismiss={handleCloseRequest}
       css={css`
         position: relative;
       `}
     >
-      {/* <button onClick={() => navigate && navigate('../')}>CLOSE</button> */}
       {onBack && <BottomCtaButton onClick={onBack}>BACK</BottomCtaButton>}
       {onNext && (
         <BottomCtaButton
@@ -139,7 +125,7 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
           NEXT
         </BottomCtaButton>
       )}
-      {recipe && (
+      {value && (
         <div>
           <div
             css={css`
@@ -147,21 +133,21 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
               position: relative;
             `}
           >
-            {recipe.image && (
+            {value.image && (
               <CardMedia
                 css={css`
-                  background-image: url(${recipe.image});
+                  background-image: url(${value.image});
                   transition: filter 0.45s ease-in-out;
-                  filter: brightness(50%) blur(1px);
+                  filter: brightness(60%) blur(1px);
                 `}
               />
             )}
 
             <MediaOverlay>
-              <Title>{recipe.title}</Title>
+              <Title>{value.title}</Title>
               <BorderContainer>
-                {recipe.ingredients &&
-                  recipe.ingredients.map((item: any, index: number) => (
+                {value.ingredients &&
+                  value.ingredients.map((item: any, index: number) => (
                     <p key={index}>
                       {item.name} - {item.amount}
                     </p>
@@ -172,19 +158,19 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
 
           <div
             css={css`
-              padding: 20px 50px;
+              padding: 20px 40px;
             `}
           >
-            {recipe.description && (
+            <h3>Similar recipes</h3>
+            {value.description && (
               <p
                 css={css`
                   margin: 40px 0;
                 `}
               >
-                {recipe.description}
+                {value.description}
               </p>
             )}
-            <h3>Similar recipes</h3>
             <div
               css={css`
                 display: grid;
@@ -192,9 +178,9 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
                 grid-gap: 10px;
               `}
             >
-              {recipe.relatedLinks &&
-                recipe.relatedLinks.length > 0 &&
-                recipe.relatedLinks.slice(0, 3).map((item: any, index: any) => (
+              {value.relatedLinks &&
+                value.relatedLinks.length > 0 &&
+                value.relatedLinks.slice(0, 3).map((item: any, index: any) => (
                   <a
                     href={item.link}
                     key={index}
@@ -221,7 +207,6 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
                   </a>
                 ))}
             </div>
-
             <div
               css={css`
                 display: flex;

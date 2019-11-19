@@ -10,11 +10,6 @@ const Icon = styled.div`
   background-image: ${({ src }: any) => `url(${src})`};
   height: 30px;
   width: 30px;
-  transition: transform 0.1s ease;
-
-  :hover {
-    transform: rotate(45deg);
-  }
 `
 
 const StyledButton = styled(Button)`
@@ -25,6 +20,7 @@ const StyledButton = styled(Button)`
   border: none;
   opacity: 0.8;
   padding: 5px;
+  cursor: pointer;
 
   @media (min-width: 640px) {
     opacity: 0.8;
