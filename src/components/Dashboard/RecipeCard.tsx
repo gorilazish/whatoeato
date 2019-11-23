@@ -68,6 +68,7 @@ export default function RecipeCard({
   image,
   onCtaClick,
   ctaButton,
+  prepTime,
   ...rest
 }: Props) {
   const handleCardClick = (e: any) => {
@@ -102,6 +103,37 @@ export default function RecipeCard({
           {image && (
             <CardMedia style={{ backgroundImage: `url(${image})` }}>
               {ctaButton && ctaButton}
+              {prepTime && (
+                <div
+                  css={css`
+                    position: absolute;
+                    top: 5px;
+                    left: 5px;
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.9);
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    align-items: center;
+                    font-size: 0.8rem;
+                    p {
+                      margin: 0;
+                      padding: 0;
+                    }
+                  `}
+                >
+                  <p>{prepTime}</p>
+                  <p
+                    css={css`
+                      font-size: 0.5rem;
+                    `}
+                  >
+                    min.
+                  </p>
+                </div>
+              )}
             </CardMedia>
           )}
         </div>

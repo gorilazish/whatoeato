@@ -24,6 +24,7 @@ export interface RecipeOptions {
   image?: string
   author: string
   ingredients?: Ingredient[]
+  prepTime?: string
 }
 
 export interface Ingredient {

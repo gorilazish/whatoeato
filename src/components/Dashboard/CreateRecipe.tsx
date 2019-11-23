@@ -1,14 +1,14 @@
+/** @jsx jsx */
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
-// @ts-ignore
+import { jsx, css } from '@emotion/core'
 import styled from '@emotion/styled'
 import {
   FormControl,
   Input,
   InputLabel,
   InputBase,
-  Typography,
   TextField,
 } from '@material-ui/core'
 import { db } from '../../db'
@@ -43,6 +43,12 @@ const searchGoogleRecipes = async (title: string) => {
 
 const Container = styled.div`
   padding: 20px;
+
+  @media (min-width: 640px) {
+    padding: 40px 20px;
+    width: 68%;
+    margin: 0 auto;
+  }
 `
 
 const CardMedia = styled.div`
@@ -97,6 +103,9 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [title, setTitle] = useState('')
   const [images, setImages] = useState([])
+  const [prepTime, setPrepTime] = useState('')
+  const [description, setDescription] = useState('')
+  const [recipeLink, setRecipeLink] = useState('')
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [currentIngredientName, setCurrentIngredientName] = useState('')
   const [currentIngredientAmount, setCurrentIngredientAmount] = useState('')
@@ -106,8 +115,6 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
       amount: '',
     },
   ])
-  const [description, setDescription] = useState('')
-  const [recipeLink, setRecipeLink] = useState('')
 
   useEffect(() => {
     if (id && value) {
@@ -150,6 +157,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
         recipeLink,
         ingredients,
         image: images[activeImageIndex],
+        prepTime,
       }
 
       if (id) {
@@ -279,15 +287,15 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
           )}
         </CardMedia>
         <Container>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="name">Meal title</InputLabel>
+          <FormControl margin='normal' required fullWidth>
+            <InputLabel htmlFor='name'>Meal title</InputLabel>
             <Input
               autoFocus
               // @ts-ignore
               onBlur={handleTitleBlur}
-              id="title"
-              name="title"
-              autoComplete="off"
+              id='title'
+              name='title'
+              autoComplete='off'
               value={title}
               onChange={e => setTitle(e.target.value)}
               style={{ marginBottom: '50px' }}
@@ -297,13 +305,11 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
             style={{
               display: 'flex',
               justifyContent: 'center',
-              marginBottom: '100px',
+              marginBottom: '10px',
               flexDirection: 'column',
             }}
           >
-            <Typography component="h2" variant="h6" gutterBottom>
-              Ingredients list
-            </Typography>
+            <h3>Ingredients list</h3>
             {ingredients.map((item, index) => (
               <IngredientCard key={`${item.name}-${index}`}>
                 <div
@@ -314,13 +320,13 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                   <InputBase
                     value={item.name || currentIngredientName}
                     onChange={e => setCurrentIngredientName(e.target.value)}
-                    placeholder="Name"
+                    placeholder='Name'
                     disabled={!!item.name}
                   />
                   <InputBase
                     value={item.amount || currentIngredientAmount}
                     onChange={e => setCurrentIngredientAmount(e.target.value)}
-                    placeholder="Amount"
+                    placeholder='Amount'
                     disabled={!!item.amount}
                   />
                   <ReturnButton onClick={handleIngredientActionClick(item)}>
@@ -329,42 +335,62 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                 </div>
               </IngredientCard>
             ))}
-
-            <FormControl margin="normal" fullWidth>
+            <h3>Category</h3>
+            <FormControl
+              style={{
+                marginTop: '50px',
+              }}
+            >
+              <InputLabel htmlFor='prepTime'>
+                Preparation time (minutes)
+              </InputLabel>
+              <Input
+                id='prepTime'
+                name='prepTime'
+                autoComplete='off'
+                value={prepTime}
+                type='number'
+                onChange={e => setPrepTime(e.target.value)}
+              />
+            </FormControl>
+            <FormControl margin='normal' fullWidth>
               <TextField
-                id="description"
-                name="description"
-                label="Description"
+                id='description'
+                name='description'
+                label='Description'
                 multiline
-                rows="4"
-                rowsMax="10"
+                rows='0'
+                rowsMax='10'
                 value={description}
                 onChange={e => setDescription(e.target.value)}
-                margin="normal"
+                margin='normal'
               />
             </FormControl>
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="name">Recipe link</InputLabel>
+            <FormControl margin='normal' fullWidth>
+              <InputLabel htmlFor='name'>Recipe link</InputLabel>
               <Input
-                id="recipeLink"
-                name="recipeLink"
-                autoComplete="off"
+                id='recipeLink'
+                name='recipeLink'
+                autoComplete='off'
                 value={recipeLink}
                 onChange={e => setRecipeLink(e.target.value)}
-                style={{ marginBottom: '50px' }}
               />
             </FormControl>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='secondary'
+              onClick={handleSubmit}
+              css={css`
+                margin: 0 auto;
+                margin-top: 50px;
+                width: 30%;
+              `}
+            >
+              {id ? 'Save' : 'Add'}
+            </Button>
           </div>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit}
-          >
-            {id ? 'Save' : 'Add'}
-          </Button>
         </Container>
       </form>
     </Modal>

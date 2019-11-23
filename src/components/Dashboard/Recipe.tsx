@@ -26,7 +26,8 @@ export type RecipeType = {
   author: string
   ingredients?: Ingredient[]
   relatedLinks?: any[]
-  mealCategory?: string[]
+  category?: string[]
+  prepTime?: string
 }
 
 type Props = RouteComponentProps & {
@@ -224,10 +225,10 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
                 padding: 20px;
               `}
             >
-              <IconButton aria-label="delete" onClick={handleEditClick}>
+              <IconButton aria-label='delete' onClick={handleEditClick}>
                 <EditIcon />
               </IconButton>
-              <IconButton aria-label="delete" onClick={handleDeleteClick}>
+              <IconButton aria-label='delete' onClick={handleDeleteClick}>
                 <DeleteIcon />
               </IconButton>
             </div>
