@@ -17,7 +17,6 @@ import CreateRecipe from './CreateRecipe'
 import Recipe from './Recipe'
 import Search from '../Search/Search'
 import Button from '../Button/Button'
-import search from './magnifying-glass.png'
 import AddButton from '../Button/AddButton'
 import RemoveButton from '../Button/RemoveButton'
 
@@ -69,11 +68,9 @@ const StyledSearch = styled(Search)`
   display: block;
   background-color: white;
   color: black;
-  margin: 30px auto 30px;
   font-size: 1.5rem;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
   width: 100%;
 
   transition: width 0.5s ease, transform 0.25s ease;
