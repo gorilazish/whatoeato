@@ -11,7 +11,7 @@ import AddButton from '../Button/AddButton'
 type Props = RecipeType & {
   style?: object
   onCtaClick?: Function
-  ctaLabel?: string
+  ctaButton?: React.ReactNode
 }
 
 const Container = styled.div``
@@ -67,7 +67,7 @@ export default function RecipeCard({
   ingredients,
   image,
   onCtaClick,
-  ctaLabel,
+  ctaButton,
   ...rest
 }: Props) {
   const handleCardClick = (e: any) => {
@@ -101,16 +101,7 @@ export default function RecipeCard({
         >
           {image && (
             <CardMedia style={{ backgroundImage: `url(${image})` }}>
-              {onCtaClick && (
-                <AddButton
-                  css={css`
-                    position: absolute;
-                    top: 5px;
-                    right: 5px;
-                  `}
-                  onClick={handleCtaClick}
-                />
-              )}
+              {ctaButton && ctaButton}
             </CardMedia>
           )}
         </div>

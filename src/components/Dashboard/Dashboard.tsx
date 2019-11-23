@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, Router } from '@reach/router'
 import {
@@ -5,6 +6,7 @@ import {
   useDocumentData,
 } from 'react-firebase-hooks/firestore'
 import styled from '@emotion/styled'
+import { jsx, css } from '@emotion/core'
 
 import { useSession } from '../../auth'
 import { db, addRecipeToQueue, removeRecipeFromQueue } from '../../db'
@@ -16,6 +18,8 @@ import Recipe from './Recipe'
 import Search from '../Search/Search'
 import Button from '../Button/Button'
 import search from './magnifying-glass.png'
+import AddButton from '../Button/AddButton'
+import RemoveButton from '../Button/RemoveButton'
 
 type Props = RouteComponentProps
 
@@ -184,18 +188,34 @@ function Dashboard({ navigate }: Props) {
         <RecipeList
           recipes={recipes.map((item: any) => ({
             ...item,
-            onCtaClick: userData.queuedRecipeIds.includes(item.id)
-              ? () => removeRecipeFromQueue(item.id)
-              : () => addRecipeToQueue(item.id),
+            ctaButton: userData.queuedRecipeIds.includes(item.id) ? (
+              <RemoveButton
+                css={css`
+                  position: absolute;
+                  top: 5px;
+                  right: 5px;
+                `}
+                onClick={() => removeRecipeFromQueue(item.id)}
+              />
+            ) : (
+              <AddButton
+                css={css`
+                  position: absolute;
+                  top: 5px;
+                  right: 5px;
+                `}
+                onClick={() => addRecipeToQueue(item.id)}
+              />
+            ),
           }))}
         />
       )}
 
       <Router primary={false}>
-        <CreateRecipe path="create" />
-        <CreateRecipe path=":id/edit" />
+        <CreateRecipe path='create' />
+        <CreateRecipe path=':id/edit' />
         <Recipe
-          path=":id"
+          path=':id'
           onClose={() => {
             setRandomViewMode(false)
           }}

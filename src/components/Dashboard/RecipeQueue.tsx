@@ -6,6 +6,7 @@ import { jsx, css } from '@emotion/core'
 import { removeRecipeFromQueue } from '../../db'
 
 import RecipeCard from './RecipeCard'
+import RemoveButton from '../Button/RemoveButton'
 
 const QueueContainer = styled.div`
   width: 100vw;
@@ -65,12 +66,20 @@ const RecipeQueue = ({ recipes }: any) => {
           {recipes.map((item: any, index: number) => (
             <RecipeCard
               key={index}
-              onCtaClick={handleRemoveClick}
-              ctaLabel="Remove from queue"
               style={{
                 scrollSnapAlign: 'center',
                 padding: '5px',
               }}
+              ctaButton={
+                <RemoveButton
+                  css={css`
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                  `}
+                  onClick={() => handleRemoveClick(item.id)}
+                />
+              }
               {...item}
             />
           ))}
