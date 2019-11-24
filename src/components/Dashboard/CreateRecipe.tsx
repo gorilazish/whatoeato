@@ -19,6 +19,7 @@ import Modal from '../Modal/Modal'
 
 import imgPlaceholder from './food-placeholder.png'
 import Button from '../Button/Button'
+import { Category } from './Recipe'
 
 type Props = RouteComponentProps & {
   onClose?: () => void
@@ -94,6 +95,29 @@ const ReturnButton = styled(Button)`
   }
 `
 
+const CategoryButton = styled(Button)`
+  transition: all 0.25s ease-in-out;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  border: 1px solid;
+  border-radius: 3px;
+`
+
+const CategoryToggle = ({ active, children, ...rest }: any) => {
+  return (
+    <CategoryButton
+      {...rest}
+      css={css`
+        background-color: ${active ? 'black' : 'transparent'};
+        color: ${active ? 'white' : 'black'};
+      `}
+    >
+      {children}
+    </CategoryButton>
+  )
+}
+
 function CreateRecipe({ onClose, navigate, id }: Props) {
   const [value, loading, error] = useDocumentDataOnce(
     id ? db.doc(`recipes/${id}`) : null,
@@ -102,10 +126,11 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
   const user = useSession()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [title, setTitle] = useState('')
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState<string[]>([])
   const [prepTime, setPrepTime] = useState('')
   const [description, setDescription] = useState('')
   const [recipeLink, setRecipeLink] = useState('')
+  const [tags, setTags] = useState<Category[]>([])
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [currentIngredientName, setCurrentIngredientName] = useState('')
   const [currentIngredientAmount, setCurrentIngredientAmount] = useState('')
@@ -134,8 +159,9 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
       setTitle(value.title)
       setDescription(value.description)
       setIngredients(value.ingredients)
-      // @ts-ignore
       setImages([value.image])
+      setTags(value.tags || [])
+      setPrepTime(value.prepTime)
     }
   }
 
@@ -158,6 +184,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
         ingredients,
         image: images[activeImageIndex],
         prepTime,
+        tags,
       }
 
       if (id) {
@@ -336,6 +363,38 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
               </IngredientCard>
             ))}
             <h3>Category</h3>
+            <div
+              css={css`
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                grid-auto-rows: 80px;
+                grid-gap: 10px;
+              `}
+            >
+              {Object.values(Category).map((item, index) => {
+                const isActive = tags && tags.includes(item)
+                return (
+                  <CategoryToggle
+                    key={index}
+                    active={isActive}
+                    css={css`
+                      text-transform: capitalize;
+                    `}
+                    onClick={() => {
+                      if (!isActive) {
+                        setTags([...tags, item])
+                      } else {
+                        setTags(
+                          tags.filter(selectedTag => item !== selectedTag),
+                        )
+                      }
+                    }}
+                  >
+                    {item}
+                  </CategoryToggle>
+                )
+              })}
+            </div>
             <FormControl
               style={{
                 marginTop: '50px',

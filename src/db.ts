@@ -5,6 +5,7 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import config from './firebaseConfig'
 import { getCurrentUser } from './auth'
+import { Category } from './components/Dashboard/Recipe'
 
 const log = debug('app:db')
 
@@ -25,6 +26,7 @@ export interface RecipeOptions {
   author: string
   ingredients?: Ingredient[]
   prepTime?: string
+  tags?: Category[]
 }
 
 export interface Ingredient {

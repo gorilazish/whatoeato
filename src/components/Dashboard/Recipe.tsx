@@ -26,8 +26,16 @@ export type RecipeType = {
   author: string
   ingredients?: Ingredient[]
   relatedLinks?: any[]
-  category?: string[]
+  tags?: Category[]
   prepTime?: string
+}
+
+export enum Category {
+  BREAKFAST = 'breakfast',
+  LUNCH = 'lunch',
+  DINNER = 'dinner',
+  DESSERT = 'dessert',
+  SOUP = 'soup',
 }
 
 type Props = RouteComponentProps & {
