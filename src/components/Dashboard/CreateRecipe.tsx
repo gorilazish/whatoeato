@@ -414,6 +414,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
             </FormControl>
             <FormControl margin='normal' fullWidth>
               <TextField
+                helperText={`${description.length}/500`}
                 id='description'
                 name='description'
                 label='Description'
@@ -421,7 +422,12 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                 rows='0'
                 rowsMax='10'
                 value={description}
-                onChange={e => setDescription(e.target.value)}
+                onChange={e => {
+                  const text = e.target.value
+                  if (text.length <= 500) {
+                    setDescription(e.target.value)
+                  }
+                }}
                 margin='normal'
               />
             </FormControl>

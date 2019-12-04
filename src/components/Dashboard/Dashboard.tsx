@@ -49,6 +49,13 @@ const CtaButton = styled(Button)`
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
   }
 
+  @media (min-width: 640px) {
+    width: auto;
+    padding: 25px 30px;
+    height: auto;
+    margin: 20px;
+  }
+
   @keyframes pulse {
     0% {
       box-shadow: inset 0 0 0 0 rgba(154, 97, 244, 0.4);

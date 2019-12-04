@@ -11,6 +11,11 @@ import RemoveButton from '../Button/RemoveButton'
 const QueueContainer = styled.div`
   width: 100vw;
   background: rgba(250, 135, 127, 0.49);
+
+  @media (min-width: 640px) {
+    max-width: 1440px;
+    background: white;
+  }
 `
 type StyledSliderProps = {
   itemCount: number
@@ -59,7 +64,11 @@ const RecipeQueue = ({ recipes }: any) => {
             transition: all 0.35s ease;
             font-size: ${isEmpty ? '1rem' : '1.5rem'};
           `}
-        >{`My Queue${isEmpty ? ' is empty' : ''}`}</h2>
+        >{`My Queue${
+          isEmpty
+            ? ' is empty'
+            : ` (${recipes.length} item${recipes.length > 1 ? 's' : ''})`
+        }`}</h2>
       </div>
       {recipes && recipes.length > 0 && (
         <HorizontalSlider itemCount={recipes.length}>
