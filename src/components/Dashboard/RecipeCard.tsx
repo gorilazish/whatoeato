@@ -69,6 +69,7 @@ export default function RecipeCard({
   onCtaClick,
   ctaButton,
   prepTime,
+  tags,
   ...rest
 }: Props) {
   const handleCardClick = (e: any) => {

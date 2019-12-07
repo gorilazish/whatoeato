@@ -181,16 +181,18 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
               padding: 20px 40px;
             `}
           >
-            <h3>Similar recipes</h3>
-            {value.description && (
+            {value.description && [
+              <h3 key={'1'}>Description</h3>,
               <p
+                key={'2'}
                 css={css`
                   margin: 40px 0;
                 `}
               >
                 {value.description}
-              </p>
-            )}
+              </p>,
+            ]}
+            <h3>Similar recipes</h3>
             <div
               css={css`
                 display: grid;

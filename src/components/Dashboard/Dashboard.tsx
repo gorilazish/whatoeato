@@ -184,7 +184,7 @@ function Dashboard({ navigate }: Props) {
         <StyledSearch
           placeholder={'search food'}
           items={values as any[]}
-          fields={['title', 'description', 'ingredients', 'author']}
+          fields={['tags', 'title', 'description', 'ingredients', 'author']}
           onResult={(result: any) => setRecipes(result)}
         />
       )}

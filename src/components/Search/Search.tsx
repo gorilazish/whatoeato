@@ -4,6 +4,8 @@ import * as JsSearch from 'js-search'
 import styled from '@emotion/styled'
 import { jsx, css } from '@emotion/core'
 
+import { Category } from '../Dashboard/Recipe'
+import CategoryToggle from '../Button/CategoryToggle'
 import searchIcon from './magnifying-glass.png'
 import plus from '../Button/plus.png'
 
@@ -27,6 +29,7 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
   const inputEl = useRef(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [search, setSearchInstance] = useState()
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
 
   useEffect(() => {
     const searchInstance = new JsSearch.Search('id')
@@ -44,15 +47,33 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
     setSearchInstance(searchInstance)
   }, [items, fields])
 
+  const filterByCategoryList = (items: any[], categories: Category[]) => {
+    if (categories.length < 1) return items
+    let filteredList = []
+
+    filteredList = items.filter(item => {
+      if (!item.tags || item.tags.length < 1) return false
+
+      return item.tags.some((tag: any) => categories.includes(tag))
+    })
+
+    return filteredList
+  }
+
+  useEffect(() => {
+    if (!search) return
+
+    if (searchQuery === '') {
+      onResult(filterByCategoryList(items, selectedCategories))
+    } else {
+      onResult(
+        filterByCategoryList(search.search(searchQuery), selectedCategories),
+      )
+    }
+  }, [searchQuery, selectedCategories])
+
   const handleSearchQueryChange = (e: any) => {
     setSearchQuery(e.target.value)
-    if (!search) return
-    const query = e.target.value
-    if (query === '') {
-      onResult(items)
-    } else {
-      onResult(search.search(e.target.value))
-    }
   }
 
   const resetSearch = () => {
@@ -62,9 +83,10 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
 
   return (
     <div
+      ref={inputEl}
       css={css`
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: flex-start;
         align-items: center;
         margin: 30px auto 30px;
@@ -73,49 +95,100 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
         transition: width 0.5s ease, transform 0.25s ease;
       `}
     >
-      {searchQuery ? (
+      {items && (
         <div
           css={css`
-            background-position: center;
-            background-size: contain;
-            height: 45px;
-            width: 45px;
-            background-repeat: no-repeat;
-            background-image: url(${plus});
-            transform: rotate(45deg);
+            width: 100%;
+            display: grid;
+            grid-auto-flow: column;
+            margin: 10px 0;
           `}
-          onClick={resetSearch}
-        />
-      ) : (
-        <div
-          css={css`
-            background-position: center;
-            background-size: contain;
-            height: 30px;
-            width: 30px;
-            background-repeat: no-repeat;
-            background-image: url(${searchIcon});
-          `}
-        />
+        >
+          {Object.values(Category).map((item, index) => {
+            const isActive = selectedCategories.includes(item)
+            return (
+              <CategoryToggle
+                key={index}
+                active={isActive}
+                css={css`
+                  text-transform: capitalize;
+                  font-size: 0.8rem;
+                  height: auto;
+
+                  @media (min-width: 640px) {
+                    padding: 20px;
+                    font-size: 1rem;
+                  }
+                `}
+                onClick={() => {
+                  if (!isActive) {
+                    setSelectedCategories([...selectedCategories, item])
+                  } else {
+                    setSelectedCategories(
+                      selectedCategories.filter(
+                        selectedTag => item !== selectedTag,
+                      ),
+                    )
+                  }
+                }}
+              >
+                {item}
+              </CategoryToggle>
+            )
+          })}
+        </div>
       )}
-      <StyledInput
-        ref={inputEl}
-        onClick={e => e.stopPropagation()}
-        value={searchQuery}
-        type='text'
-        placeholder='search'
-        onChange={handleSearchQueryChange}
-        onFocus={e => {
-          if (inputEl.current) {
-            const el: any = inputEl.current
-            window.scroll({
-              top: el.offsetTop,
-              behavior: 'smooth',
-            })
-          }
-        }}
-        {...rest}
-      />
+      <div
+        css={css`
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+        `}
+      >
+        {searchQuery ? (
+          <div
+            css={css`
+              background-position: center;
+              background-size: contain;
+              height: 45px;
+              width: 45px;
+              background-repeat: no-repeat;
+              background-image: url(${plus});
+              transform: rotate(45deg);
+            `}
+            onClick={resetSearch}
+          />
+        ) : (
+          <div
+            css={css`
+              background-position: center;
+              background-size: contain;
+              height: 30px;
+              width: 30px;
+              background-repeat: no-repeat;
+              background-image: url(${searchIcon});
+            `}
+          />
+        )}
+        <StyledInput
+          onClick={e => e.stopPropagation()}
+          value={searchQuery}
+          type='text'
+          placeholder='search'
+          onChange={handleSearchQueryChange}
+          onFocus={e => {
+            if (inputEl.current) {
+              const el: any = inputEl.current
+              window.scroll({
+                top: el.offsetTop,
+                behavior: 'smooth',
+              })
+            }
+          }}
+          {...rest}
+        />
+      </div>
     </div>
   )
 }

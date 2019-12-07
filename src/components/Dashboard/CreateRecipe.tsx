@@ -19,6 +19,7 @@ import Modal from '../Modal/Modal'
 
 import imgPlaceholder from './food-placeholder.png'
 import Button from '../Button/Button'
+import CategoryToggle from '../Button/CategoryToggle'
 import { Category } from './Recipe'
 
 type Props = RouteComponentProps & {
@@ -95,29 +96,6 @@ const ReturnButton = styled(Button)`
   }
 `
 
-const CategoryButton = styled(Button)`
-  transition: all 0.25s ease-in-out;
-  padding: 10px;
-  height: 100%;
-  width: 100%;
-  border: 1px solid;
-  border-radius: 3px;
-`
-
-const CategoryToggle = ({ active, children, ...rest }: any) => {
-  return (
-    <CategoryButton
-      {...rest}
-      css={css`
-        background-color: ${active ? 'black' : 'transparent'};
-        color: ${active ? 'white' : 'black'};
-      `}
-    >
-      {children}
-    </CategoryButton>
-  )
-}
-
 function CreateRecipe({ onClose, navigate, id }: Props) {
   const [value, loading, error] = useDocumentDataOnce(
     id ? db.doc(`recipes/${id}`) : null,
@@ -134,6 +112,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [currentIngredientName, setCurrentIngredientName] = useState('')
   const [currentIngredientAmount, setCurrentIngredientAmount] = useState('')
+  const [relatedLinks, setRelatedLinks] = useState<any[]>([])
   const [ingredients, setIngredients] = useState<Ingredient[]>([
     {
       name: '',
@@ -161,7 +140,8 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
       setIngredients(value.ingredients)
       setImages([value.image])
       setTags(value.tags || [])
-      setPrepTime(value.prepTime)
+      setPrepTime(value.prepTime || '')
+      setRelatedLinks(value.relatedLinks || '')
     }
   }
 
@@ -185,6 +165,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
         image: images[activeImageIndex],
         prepTime,
         tags,
+        relatedLinks,
       }
 
       if (id) {
@@ -255,8 +236,8 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
       })
 
       if (recipeImages.length > 0) {
-        // @ts-ignore
         setImages(recipeImages)
+        setRelatedLinks(relatedLinks)
       }
     }
   }
