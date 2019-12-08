@@ -10,7 +10,7 @@ const Container = styled.nav`
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   z-index: 10;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.75);
 `
@@ -18,7 +18,7 @@ const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   margin: 0 auto;
-  padding: 10px;
+  padding: 5px;
 `
 
 const Utils = styled.div`

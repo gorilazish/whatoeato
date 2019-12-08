@@ -19,8 +19,7 @@ const CategoryButton = styled(Button)`
   padding: 10px 5px;
 
   @media (min-width: 640px) {
-    padding: 15px;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `
 

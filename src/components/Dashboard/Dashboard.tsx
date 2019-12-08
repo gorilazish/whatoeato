@@ -17,6 +17,7 @@ import CreateRecipe from './CreateRecipe'
 import Recipe from './Recipe'
 import Search from '../Search/Search'
 import Button from '../Button/Button'
+import ShuffleButton from '../Button/ShuffleButton'
 import AddButton from '../Button/AddButton'
 import RemoveButton from '../Button/RemoveButton'
 
@@ -32,28 +33,19 @@ const Top = styled.div`
   padding-bottom: 20px;
 `
 
-const CtaButton = styled(Button)`
-  border: none;
-  background-color: #ffe2c5;
-  padding: 25px 15px;
-  width: 100vw;
-  height: 15vh;
-  font-family: inherit;
-  cursor: pointer;
-  text-transform: uppercase;
+const CtaButton = styled(ShuffleButton)`
+  position: fixed;
+  bottom: 6px;
+  right: 10px;
+  font-size: 0.6rem;
+  z-index: 10;
+  height: 49px;
+  width: 49px;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
   animation: pulse 2.5s infinite;
   :hover,
   :focus {
     animation: none;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
-  }
-
-  @media (min-width: 640px) {
-    width: auto;
-    padding: 25px 30px;
-    height: auto;
-    margin: 20px;
   }
 
   @keyframes pulse {
@@ -155,7 +147,7 @@ function Dashboard({ navigate }: Props) {
   return (
     <Container>
       <Top>
-        {/* <CtaButton
+        <CtaButton
           onClick={() => {
             if (values && values.length > 0 && navigate) {
               const randomItem: any =
@@ -164,9 +156,7 @@ function Dashboard({ navigate }: Props) {
               setRandomViewMode(true)
             }
           }}
-        >
-          I want to eat!
-        </CtaButton> */}
+        />
 
         <RecipeQueue
           recipes={
@@ -179,8 +169,16 @@ function Dashboard({ navigate }: Props) {
         />
       </Top>
       <br />
-      <h2>Recipes</h2>
-      {values && (
+      {values && values.length > 0 ? (
+        <h2>Recipes</h2>
+      ) : (
+        <div>
+          <br />
+          <h2>You have no recipes yet 😒</h2>
+          <h3>Add recipes by clicking plus in the bottom of the screen</h3>
+        </div>
+      )}
+      {values && values.length > 0 && (
         <StyledSearch
           placeholder={'search food'}
           items={values as any[]}
@@ -192,25 +190,27 @@ function Dashboard({ navigate }: Props) {
         <RecipeList
           recipes={recipes.map((item: any) => ({
             ...item,
-            ctaButton: userData.queuedRecipeIds.includes(item.id) ? (
-              <RemoveButton
-                css={css`
-                  position: absolute;
-                  top: 5px;
-                  right: 5px;
-                `}
-                onClick={() => removeRecipeFromQueue(item.id)}
-              />
-            ) : (
-              <AddButton
-                css={css`
-                  position: absolute;
-                  top: 5px;
-                  right: 5px;
-                `}
-                onClick={() => addRecipeToQueue(item.id)}
-              />
-            ),
+            ctaButton:
+              userData.queuedRecipeIds &&
+              userData.queuedRecipeIds.includes(item.id) ? (
+                <RemoveButton
+                  css={css`
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                  `}
+                  onClick={() => removeRecipeFromQueue(item.id)}
+                />
+              ) : (
+                <AddButton
+                  css={css`
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                  `}
+                  onClick={() => addRecipeToQueue(item.id)}
+                />
+              ),
           }))}
         />
       )}
