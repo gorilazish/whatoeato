@@ -10,8 +10,18 @@ const CategoryButton = styled(Button)`
   padding: 10px;
   height: 100%;
   width: 100%;
-  border: 1px solid;
-  border-radius: 3px;
+  border: 2px solid;
+  border-radius: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.5rem;
+  height: auto;
+  padding: 10px 5px;
+
+  @media (min-width: 640px) {
+    padding: 15px;
+    font-size: 1rem;
+  }
 `
 
 const CategoryToggle = ({ active, children, ...rest }: any) => {
@@ -19,8 +29,9 @@ const CategoryToggle = ({ active, children, ...rest }: any) => {
     <CategoryButton
       {...rest}
       css={css`
-        background-color: ${active ? 'black' : 'transparent'};
-        color: ${active ? 'white' : 'black'};
+        background-color: ${active ? 'transparent' : 'transparent'};
+        color: ${active ? 'black' : 'lightgray'};
+        border-color: ${active ? 'black' : 'lightgray'};
       `}
     >
       {children}

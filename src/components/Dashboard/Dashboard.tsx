@@ -84,18 +84,18 @@ const StyledSearch = styled(Search)`
 
   @media (min-width: 640px) {
     width: 40vw;
+    width: 100%;
   }
 
   ::placeholder {
     color: gray;
   }
 
+  text-align: left;
   :focus {
     text-align: left;
     outline: none;
     width: 100%;
-    animation: hoverEffect 0.25s;
-    animation-fill-mode: forwards;
   }
 
   @keyframes hoverEffect {

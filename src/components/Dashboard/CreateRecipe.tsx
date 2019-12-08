@@ -306,7 +306,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
               autoComplete='off'
               value={title}
               onChange={e => setTitle(e.target.value)}
-              style={{ marginBottom: '50px' }}
+              style={{ marginBottom: '20px' }}
             />
           </FormControl>
           <div
@@ -343,13 +343,17 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                 </div>
               </IngredientCard>
             ))}
+            <br />
             <h3>Category</h3>
             <div
               css={css`
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-                grid-auto-rows: 80px;
-                grid-gap: 10px;
+                grid-auto-flow: column;
+                grid-gap: 5px;
+
+                @media (min-width: 640px) {
+                  grid-gap: 10px;
+                }
               `}
             >
               {Object.values(Category).map((item, index) => {
@@ -358,9 +362,6 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                   <CategoryToggle
                     key={index}
                     active={isActive}
-                    css={css`
-                      text-transform: capitalize;
-                    `}
                     onClick={(e: any) => {
                       e.preventDefault()
                       if (!isActive) {
@@ -377,11 +378,8 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                 )
               })}
             </div>
-            <FormControl
-              style={{
-                marginTop: '50px',
-              }}
-            >
+            <br />
+            <FormControl>
               <InputLabel htmlFor='prepTime'>
                 Preparation time (minutes)
               </InputLabel>
@@ -413,7 +411,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                 margin='normal'
               />
             </FormControl>
-            <FormControl margin='normal' fullWidth>
+            {/* <FormControl margin='normal' fullWidth>
               <InputLabel htmlFor='name'>Recipe link</InputLabel>
               <Input
                 id='recipeLink'
@@ -422,7 +420,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                 value={recipeLink}
                 onChange={e => setRecipeLink(e.target.value)}
               />
-            </FormControl>
+            </FormControl> */}
             <Button
               type='submit'
               fullWidth

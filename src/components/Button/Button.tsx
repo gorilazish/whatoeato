@@ -13,6 +13,11 @@ const StyledButton = styled.button`
   color: black;
   font-size: 1rem;
   font-weight: bold;
+
+  :focus {
+    outline: 1px dashed lightgrey;
+    outline-offset: 3px;
+  }
 `
 
 const StyledLink = StyledButton.withComponent(Link)

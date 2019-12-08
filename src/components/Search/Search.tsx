@@ -22,7 +22,7 @@ const StyledInput = styled.input`
   min-height: 40px;
   padding: 10px;
   background: lightgoldenrodyellow;
-  margin: 0 auto;
+  margin: 10px auto;
 `
 
 const Search = ({ items, fields, onResult, ...rest }: Props) => {
@@ -88,8 +88,8 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center;
-        margin: 30px auto 30px;
+        align-items: flex-start;
+        margin: 10px auto 30px;
         box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
         width: 100%;
         transition: width 0.5s ease, transform 0.25s ease;
@@ -102,6 +102,11 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
             display: grid;
             grid-auto-flow: column;
             margin: 10px 0;
+            grid-gap: 5px;
+
+            @media (min-width: 640px) {
+              grid-gap: 10px;
+            }
           `}
         >
           {Object.values(Category).map((item, index) => {
@@ -110,16 +115,6 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
               <CategoryToggle
                 key={index}
                 active={isActive}
-                css={css`
-                  text-transform: capitalize;
-                  font-size: 0.8rem;
-                  height: auto;
-
-                  @media (min-width: 640px) {
-                    padding: 20px;
-                    font-size: 1rem;
-                  }
-                `}
                 onClick={() => {
                   if (!isActive) {
                     setSelectedCategories([...selectedCategories, item])
