@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/whatoeato/static/css/main.27c72d91.chunk.css",
-    "main.js": "/whatoeato/static/js/main.a2749bcf.chunk.js",
-    "main.js.map": "/whatoeato/static/js/main.a2749bcf.chunk.js.map",
-    "runtime-main.js": "/whatoeato/static/js/runtime-main.3fb3475b.js",
-    "runtime-main.js.map": "/whatoeato/static/js/runtime-main.3fb3475b.js.map",
-    "static/css/2.200132ab.chunk.css": "/whatoeato/static/css/2.200132ab.chunk.css",
-    "static/js/2.8fbb268c.chunk.js": "/whatoeato/static/js/2.8fbb268c.chunk.js",
-    "static/js/2.8fbb268c.chunk.js.map": "/whatoeato/static/js/2.8fbb268c.chunk.js.map",
-    "index.html": "/whatoeato/index.html",
-    "precache-manifest.b69a31ee854f7d700649e6608700628c.js": "/whatoeato/precache-manifest.b69a31ee854f7d700649e6608700628c.js",
-    "service-worker.js": "/whatoeato/service-worker.js",
-    "static/css/2.200132ab.chunk.css.map": "/whatoeato/static/css/2.200132ab.chunk.css.map",
-    "static/css/main.27c72d91.chunk.css.map": "/whatoeato/static/css/main.27c72d91.chunk.css.map",
-    "static/media/food-placeholder.png": "/whatoeato/static/media/food-placeholder.86d14ad8.png",
-    "static/media/index.css": "/whatoeato/static/media/roboto-latin-900italic.ebf6d164.woff2"
+    "main.css": "/static/css/main.27c72d91.chunk.css",
+    "main.js": "/static/js/main.cfe9ef18.chunk.js",
+    "main.js.map": "/static/js/main.cfe9ef18.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.2638a374.js",
+    "runtime-main.js.map": "/static/js/runtime-main.2638a374.js.map",
+    "static/css/2.ef2139d1.chunk.css": "/static/css/2.ef2139d1.chunk.css",
+    "static/js/2.816af503.chunk.js": "/static/js/2.816af503.chunk.js",
+    "static/js/2.816af503.chunk.js.map": "/static/js/2.816af503.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.8544ee9bd0a928c0c8a8765fd93863b1.js": "/precache-manifest.8544ee9bd0a928c0c8a8765fd93863b1.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.ef2139d1.chunk.css.map": "/static/css/2.ef2139d1.chunk.css.map",
+    "static/css/main.27c72d91.chunk.css.map": "/static/css/main.27c72d91.chunk.css.map",
+    "static/media/food-placeholder.png": "/static/media/food-placeholder.86d14ad8.png",
+    "static/media/index.css": "/static/media/roboto-latin-900italic.ebf6d164.woff2"
   },
   "entrypoints": [
-    "static/js/runtime-main.3fb3475b.js",
-    "static/css/2.200132ab.chunk.css",
-    "static/js/2.8fbb268c.chunk.js",
+    "static/js/runtime-main.2638a374.js",
+    "static/css/2.ef2139d1.chunk.css",
+    "static/js/2.816af503.chunk.js",
     "static/css/main.27c72d91.chunk.css",
-    "static/js/main.a2749bcf.chunk.js"
+    "static/js/main.cfe9ef18.chunk.js"
   ]
 }
