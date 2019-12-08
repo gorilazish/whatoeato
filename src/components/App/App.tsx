@@ -46,22 +46,16 @@ function App(props: any) {
             user: user,
           }}
         >
-          <Router
-            basepath={
-              process.env.NODE_ENV === 'production' ? '/whatoeato' : '/'
-            }
-            primary={false}
-            style={{ width: '100%' }}
-          >
-            {user ? <Dashboard path="/*" /> : <Frontpage path="/*" />}
-            <Login path="login" />
-            <Signup path="signup" />
+          <Router primary={false} style={{ width: '100%' }}>
+            {user ? <Dashboard path='/*' /> : <Frontpage path='/*' />}
+            <Login path='login' />
+            <Signup path='signup' />
           </Router>
         </UserContext.Provider>
       </ContentWrapper>
     </Container>
   ) : (
-    <div id="loader">
+    <div id='loader'>
       <CircularProgress />
     </div>
   )

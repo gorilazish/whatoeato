@@ -42,15 +42,7 @@ export default function Header({ user }: any) {
 
         {user && (
           <div>
-            <AddButton
-              onClick={() =>
-                navigate(
-                  process.env.NODE_ENV === 'production'
-                    ? '/whatoeato/create'
-                    : 'create',
-                )
-              }
-            />
+            <AddButton onClick={() => navigate('create')} />
           </div>
         )}
         {user && <Utils></Utils>}
