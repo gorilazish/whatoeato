@@ -2,7 +2,7 @@
   "name": "what-to-eat",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gorilazish.github.io/whatoeato/",
+  "homepage": "https://gorilazish.github.io/",
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
