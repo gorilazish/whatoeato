@@ -14,7 +14,6 @@ const QueueContainer = styled.div`
 
   @media (min-width: 640px) {
     max-width: 1440px;
-    background: white;
   }
 `
 type StyledSliderProps = {

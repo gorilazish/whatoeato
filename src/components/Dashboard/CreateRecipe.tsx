@@ -361,7 +361,8 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                     css={css`
                       text-transform: capitalize;
                     `}
-                    onClick={() => {
+                    onClick={(e: any) => {
+                      e.preventDefault()
                       if (!isActive) {
                         setTags([...tags, item])
                       } else {

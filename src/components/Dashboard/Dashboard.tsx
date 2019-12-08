@@ -155,7 +155,7 @@ function Dashboard({ navigate }: Props) {
   return (
     <Container>
       <Top>
-        <CtaButton
+        {/* <CtaButton
           onClick={() => {
             if (values && values.length > 0 && navigate) {
               const randomItem: any =
@@ -166,7 +166,7 @@ function Dashboard({ navigate }: Props) {
           }}
         >
           I want to eat!
-        </CtaButton>
+        </CtaButton> */}
 
         <RecipeQueue
           recipes={
