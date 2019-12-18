@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from '@emotion/styled/macro'
 import { signOut } from '../../auth'
 
@@ -8,7 +8,7 @@ export const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: lightgray;
+  background: rgba(255, 237, 237, 0.82);
   height: 100vh;
   width: 50vw;
   text-align: left;
@@ -29,14 +29,49 @@ export const StyledMenu = styled.nav`
   }
 `
 
-export default function Menu({ isOpen, ...rest }: any) {
+const useOutsideClick = (ref: any, callback: any) => {
+  const handleClick = (e: any) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      callback()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick)
+
+    return () => {
+      document.removeEventListener('click', handleClick)
+    }
+  })
+}
+
+export default function Menu({ isOpen, onRequestClose, ...rest }: any) {
+  const ref: any = useRef()
+  useOutsideClick(ref, () => {
+    if (isOpen) {
+      onRequestClose()
+    }
+  })
+
   return (
     <StyledMenu
-      style={{ transform: isOpen ? 'translateX(0)' : 'translateX(-100%)' }}
+      ref={ref}
+      style={{
+        transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+        borderRight: isOpen ? '2px dashed black' : 'none',
+      }}
     >
-      <Button to={'/'}>Home</Button>
+      <Button onClick={() => onRequestClose()} to={'/'}>
+        Home
+      </Button>
       <hr />
-      <Button type='submit' onClick={signOut}>
+      <Button
+        type='submit'
+        onClick={() => {
+          onRequestClose()
+          signOut()
+        }}
+      >
         Logout
       </Button>
     </StyledMenu>

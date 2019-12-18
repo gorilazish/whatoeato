@@ -47,7 +47,7 @@ export default function Header({ user }: any) {
         )}
         {user && <Utils></Utils>}
       </ContentWrapper>
-      <Menu isOpen={isMenuOpen} />
+      <Menu isOpen={isMenuOpen} onRequestClose={() => setMenuOpen(false)} />
     </Container>
   )
 }

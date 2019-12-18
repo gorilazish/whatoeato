@@ -25,7 +25,15 @@ const StyledLink = StyledButton.withComponent(Link)
 const Button = ({ children, to, onClick, ...rest }: Props) => {
   if (to)
     return (
-      <StyledLink to={to} {...rest}>
+      <StyledLink
+        to={to}
+        onClick={(e: any) => {
+          if (onClick) {
+            onClick(e)
+          }
+        }}
+        {...rest}
+      >
         {children}
       </StyledLink>
     )
