@@ -29,12 +29,15 @@ const ContentWrapper = styled.div`
 `
 
 const CardContent = styled.div`
-  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
   margin: 0 auto;
   background-color: #fff9f9;
   padding: 10px 15px;
-  text-align: center;
-  margin-top: -8px;
+  margin-top: -16px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   z-index: 1;
@@ -139,9 +142,27 @@ export default function RecipeCard({
           )}
         </div>
         <CardContent>
-          <h2 style={{ fontSize: '1.1rem', margin: '0', fontWeight: 'normal' }}>
+          <h2
+            css={css`
+              font-size: 1.2rem;
+              margin: 0;
+              font-weight: normal;
+              text-transform: capitalize;
+            `}
+          >
             {title}
           </h2>
+          {tags && (
+            <span
+              css={css`
+                margin-top: 5px;
+                font-size: 0.7rem;
+                color: darkgray;
+              `}
+            >
+              {tags && tags.join(' | ')}
+            </span>
+          )}
         </CardContent>
       </ContentWrapper>
     </Container>

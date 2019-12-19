@@ -8,8 +8,8 @@ const Icon = styled.div`
   background-position: center;
   background-size: cover;
   background-image: ${({ src }: any) => `url(${src})`};
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
 `
 
 const StyledButton = styled(Button)`
@@ -17,7 +17,7 @@ const StyledButton = styled(Button)`
   align-items: center;
   justify-content: center;
   border-radius: 50px;
-  padding: 5px;
+  padding: 0px;
   cursor: pointer;
 
   @media (min-width: 640px) {

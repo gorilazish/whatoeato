@@ -161,7 +161,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
         author: user.displayName || '',
         description,
         recipeLink,
-        ingredients,
+        ingredients: ingredients[0].name !== '' ? ingredients : undefined,
         image: images[activeImageIndex],
         prepTime,
         tags,

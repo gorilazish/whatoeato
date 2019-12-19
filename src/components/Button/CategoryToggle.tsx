@@ -12,15 +12,11 @@ const CategoryButton = styled(Button)`
   width: 100%;
   border: 2px solid;
   border-radius: 2px;
+  font-size: 0.7rem;
   cursor: pointer;
   text-transform: uppercase;
-  font-size: 0.5rem;
   height: auto;
   padding: 10px 5px;
-
-  @media (min-width: 640px) {
-    font-size: 0.8rem;
-  }
 `
 
 const CategoryToggle = ({ active, children, ...rest }: any) => {

@@ -165,20 +165,21 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
 
             <MediaOverlay>
               <Title>{value.title}</Title>
-              <BorderContainer>
-                {value.ingredients &&
-                  value.ingredients.map((item: any, index: number) => (
+              {value.ingredients && (
+                <BorderContainer>
+                  {value.ingredients.map((item: any, index: number) => (
                     <p key={index}>
                       {item.name} - {item.amount}
                     </p>
                   ))}
-              </BorderContainer>
+                </BorderContainer>
+              )}
             </MediaOverlay>
           </div>
 
           <div
             css={css`
-              padding: 20px 40px;
+              padding: 20px 40px 60px;
             `}
           >
             {value.description && [

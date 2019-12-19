@@ -8,27 +8,19 @@ const Icon = styled.div`
   background-position: center;
   background-size: cover;
   background-image: ${({ src }: any) => `url(${src})`};
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
 `
 
 const StyledButton = styled(Button)`
   background: transparent;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 50px;
   border: none;
-  padding: 5px;
+  padding: 15px;
   cursor: pointer;
-
-  @media (min-width: 640px) {
-    transition: background-color 0.1s ease-in-out;
-
-    :hover {
-      background-color: rgba(255, 127, 80, 1);
-    }
-  }
 `
 
 export default function ShuffleButton({ children, ...rest }: any) {

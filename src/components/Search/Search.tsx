@@ -21,8 +21,8 @@ const StyledInput = styled.input`
   border: none;
   min-height: 40px;
   padding: 10px;
-  background: lightgoldenrodyellow;
-  margin: 10px auto;
+  font-size: 1.2rem;
+  font-family: inherit;
 `
 
 const Search = ({ items, fields, onResult, ...rest }: Props) => {
@@ -89,8 +89,7 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        margin: 10px auto 30px;
-        box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
+        margin: 10px auto 15px;
         width: 100%;
         transition: width 0.5s ease, transform 0.25s ease;
       `}
@@ -101,7 +100,7 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
             width: 100%;
             display: grid;
             grid-auto-flow: column;
-            margin: 10px 0;
+            margin: 10px 0 15px;
             grid-gap: 5px;
 
             @media (min-width: 640px) {
@@ -133,12 +132,16 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
           })}
         </div>
       )}
+
       <div
         css={css`
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
+          width: 100%;
+          overflow: hidden;
+          border: 1px solid lightgray;
         `}
       >
         {searchQuery ? (
@@ -146,11 +149,14 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
             css={css`
               background-position: center;
               background-size: contain;
-              height: 45px;
-              width: 45px;
+              height: 35px;
+              width: 35px;
               background-repeat: no-repeat;
               background-image: url(${plus});
               transform: rotate(45deg);
+              margin-left: 10px;
+              opacity: 0.6;
+              cursor: pointer;
             `}
             onClick={resetSearch}
           />
@@ -159,10 +165,12 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
             css={css`
               background-position: center;
               background-size: contain;
-              height: 30px;
-              width: 30px;
+              height: 20px;
+              width: 20px;
               background-repeat: no-repeat;
               background-image: url(${searchIcon});
+              margin-left: 15px;
+              opacity: 0.6;
             `}
           />
         )}
