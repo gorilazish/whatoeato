@@ -6,7 +6,7 @@ import { jsx, css } from '@emotion/core'
 import Button from './Button'
 
 const CategoryButton = styled(Button)`
-  transition: all 0.25s ease-in-out;
+  transition: all 0.05s ease-in-out;
   padding: 10px;
   height: 100%;
   width: 100%;
@@ -28,6 +28,7 @@ const CategoryToggle = ({ active, children, ...rest }: any) => {
         color: ${active ? 'black' : 'lightgray'};
         border-color: ${active ? 'black' : 'lightgray'};
       `}
+      animate={false}
     >
       {children}
     </CategoryButton>

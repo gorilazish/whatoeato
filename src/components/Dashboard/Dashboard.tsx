@@ -50,6 +50,8 @@ const StyledSearch = styled(Search)`
   }
 `
 
+const SEARCH_FIELDS = ['tags', 'title', 'description', 'ingredients', 'author']
+
 function Dashboard({ navigate }: Props) {
   const user = useSession()
   const [recipes, setRecipes] = useState()
@@ -113,7 +115,7 @@ function Dashboard({ navigate }: Props) {
         <StyledSearch
           placeholder={'search food'}
           items={values as any[]}
-          fields={['tags', 'title', 'description', 'ingredients', 'author']}
+          fields={SEARCH_FIELDS}
           onResult={(result: any) => setRecipes(result)}
         />
       )}

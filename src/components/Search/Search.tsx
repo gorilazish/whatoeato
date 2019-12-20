@@ -24,6 +24,7 @@ const StyledInput = styled.input`
   font-size: 1.2rem;
   font-family: inherit;
 `
+const searchInstance = new JsSearch.Search('id')
 
 const Search = ({ items, fields, onResult, ...rest }: Props) => {
   const inputEl = useRef(null)
@@ -32,7 +33,6 @@ const Search = ({ items, fields, onResult, ...rest }: Props) => {
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
 
   useEffect(() => {
-    const searchInstance = new JsSearch.Search('id')
     fields.forEach(field => searchInstance.addIndex(field))
     items.forEach(item => {
       // @ts-ignore
