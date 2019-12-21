@@ -20,15 +20,7 @@ const StyledButton = styled(Button)`
   border: none;
   padding: 5px;
   cursor: pointer;
-
-  @media (min-width: 640px) {
-    background-color: rgba(255, 127, 80, 0.8);
-    transition: background-color 0.1s ease-in-out;
-
-    :hover {
-      background-color: rgba(255, 127, 80, 1);
-    }
-  }
+  background-color: rgba(64, 64, 64, 0.84);
 
   svg {
     fill: white;

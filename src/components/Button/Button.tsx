@@ -7,6 +7,8 @@ import { jsx, css } from '@emotion/core'
 type Props = any
 
 const interactionStyles = css`
+  transition: all 0.3s, outline-offset 0s, color 0.2s ease 0.1s;
+
   &:before {
     content: '';
     position: absolute;
@@ -14,7 +16,7 @@ const interactionStyles = css`
     left: 0;
     width: 0%;
     height: 100%;
-    transition: all 0.3s, outline-offset 0s;
+    transition: all 0.3s, outline-offset 0s, color 0.1s ease 0.2s;
     background-color: rgba(177, 140, 148, 0.5);
     z-index: -1;
   }

@@ -133,7 +133,11 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
         position: relative;
       `}
     >
-      {onBack && <BottomCtaButton onClick={onBack}>BACK</BottomCtaButton>}
+      {onBack && (
+        <BottomCtaButton animate={false} onClick={onBack}>
+          BACK
+        </BottomCtaButton>
+      )}
       {onNext && (
         <BottomCtaButton
           css={css`
@@ -141,6 +145,7 @@ const Recipe = ({ id, navigate, onNext, onBack, onClose }: Props) => {
             right: 0;
           `}
           onClick={onNext}
+          animate={false}
         >
           NEXT
         </BottomCtaButton>

@@ -11,14 +11,8 @@ const StyledButton = styled(Button)`
   border-radius: 50px;
   padding: 5px;
   cursor: pointer;
-
-  @media (min-width: 640px) {
-    transition: background-color 0.1s ease-in-out;
-
-    :hover {
-      background-color: rgba(255, 127, 80, 1);
-    }
-  }
+  height: 35px;
+  width: 35px;
 `
 
 export default function AddButton({ children, ...rest }: any) {
@@ -32,8 +26,8 @@ export default function AddButton({ children, ...rest }: any) {
 function AddIcon() {
   return (
     <svg
-      height='25'
-      width='25'
+      height='100%'
+      width='100%'
       xmlns='http://www.w3.org/2000/svg'
       x='0'
       y='0'

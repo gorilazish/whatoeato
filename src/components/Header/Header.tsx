@@ -36,7 +36,7 @@ const CtaButton = styled(ShuffleButton)`
   font-size: 0.6rem;
   height: 50px;
   width: auto;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  box-shadow: 0 0 0 0 rgba(254, 203, 214, 1);
   animation: pulse 2.5s infinite;
   :hover,
   :focus {
@@ -45,15 +45,15 @@ const CtaButton = styled(ShuffleButton)`
 
   @keyframes pulse {
     0% {
-      box-shadow: inset 0 0 0 0 rgba(154, 97, 244, 0.4);
+      box-shadow: inset 0 0 0 0 rgba(254, 203, 214, 0.4);
     }
 
     70% {
-      box-shadow: inset 0 0 0 15px rgba(154, 97, 244, 0);
+      box-shadow: inset 0 0 0 15px rgba(254, 203, 214, 0);
     }
 
     100% {
-      box-shadow: inset 0 0 0 0 rgba(154, 97, 244, 0);
+      box-shadow: inset 0 0 0 0 rgba(254, 203, 214, 0);
     }
   }
 `
