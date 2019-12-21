@@ -307,6 +307,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
               value={title}
               onChange={e => setTitle(e.target.value)}
               style={{ marginBottom: '20px' }}
+              inputProps={{ style: { textTransform: 'capitalize' } }}
             />
           </FormControl>
           <div
@@ -329,6 +330,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                     value={item.name || currentIngredientName}
                     onChange={e => setCurrentIngredientName(e.target.value)}
                     placeholder='Name'
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
                     disabled={!!item.name}
                   />
                   <InputBase
@@ -338,7 +340,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
                     disabled={!!item.amount}
                   />
                   <ReturnButton onClick={handleIngredientActionClick(item)}>
-                    {item.name ? 'Remove' : 'Enter'}
+                    {item.name ? 'Remove' : 'Add'}
                   </ReturnButton>
                 </div>
               </IngredientCard>
@@ -427,6 +429,7 @@ function CreateRecipe({ onClose, navigate, id }: Props) {
               variant='contained'
               color='secondary'
               onClick={handleSubmit}
+              disabled={!title || images.length < 1}
               css={css`
                 margin: 0 auto;
                 margin-top: 50px;

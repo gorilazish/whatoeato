@@ -53,11 +53,24 @@ const StyledButton = styled.button`
   }
 
   ${({ animate }: any) => animate && interactionStyles};
+  ${({ disabled }: any) =>
+    disabled &&
+    css`
+      cursor: default;
+      background: grey;
+    `};
 `
 
 const StyledLink = StyledButton.withComponent(Link)
 
-const Button = ({ children, to, onClick, animate = true, ...rest }: Props) => {
+const Button = ({
+  children,
+  to,
+  onClick,
+  animate = true,
+  disabled,
+  ...rest
+}: Props) => {
   if (to)
     return (
       <StyledLink
@@ -81,7 +94,13 @@ const Button = ({ children, to, onClick, animate = true, ...rest }: Props) => {
     }
   }
   return (
-    <StyledButton onClick={handleClick} {...rest} animate={animate}>
+    <StyledButton
+      onClick={handleClick}
+      type='button'
+      {...rest}
+      animate={animate}
+      disabled={disabled}
+    >
       {children}
     </StyledButton>
   )
