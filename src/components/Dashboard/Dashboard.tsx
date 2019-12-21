@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useEffect } from 'react'
+import ReactGA from 'react-ga'
 import { RouteComponentProps, Router } from '@reach/router'
 import {
   useCollectionData,
@@ -49,7 +50,6 @@ const StyledSearch = styled(Search)`
     width: 100%;
   }
 `
-
 const SEARCH_FIELDS = ['tags', 'title', 'description', 'ingredients', 'author']
 
 function Dashboard({ navigate }: Props) {
@@ -65,6 +65,16 @@ function Dashboard({ navigate }: Props) {
     { idField: 'id' },
   )
   const [userData]: any = useDocumentData(db.collection('users').doc(user!.uid))
+
+  useEffect(() => {
+    ReactGA.initialize('UA-106776142-2', {
+      debug: false,
+      gaOptions: {
+        userId: user ? user.uid : undefined,
+        name: user && user.displayName ? user.displayName : undefined,
+      },
+    })
+  }, [])
 
   useEffect(() => {
     if (values) {
